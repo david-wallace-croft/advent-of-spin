@@ -1,0 +1,20 @@
+spin_manifest_version = 2
+
+[application]
+authors = ["David Wallace Croft <david@CroftSoft.com>"]
+description = "Advent of Spin 2023 Challenge 2"
+name = "challenge2"
+version = "0.1.0"
+
+[component.optimal]
+allowed_outbound_hosts = []
+source = "optimal/target/wasm32-wasi/release/optimal.wasm"
+
+[component.optimal.build]
+command = "cargo build --target wasm32-wasi --release"
+watch = ["src/**/*.rs", "Cargo.toml"]
+workdir = "optimal"
+
+[[trigger.http]]
+route = "/..."
+component = "optimal"
