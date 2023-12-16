@@ -1,0 +1,20 @@
+spin_manifest_version = 2
+
+[application]
+authors = ["David Wallace Croft <david@CroftSoft.com>"]
+description = "Advent of Spin 2023 Challenge 3"
+name = "challenge3"
+version = "0.1.0"
+
+[component.confabulator]
+allowed_outbound_hosts = []
+source = "confabulator/target/wasm32-wasi/release/confabulator.wasm"
+
+[component.confabulator.build]
+command = "cargo build --target wasm32-wasi --release"
+watch = ["src/**/*.rs", "Cargo.toml"]
+workdir = "confabulator"
+
+[[trigger.http]]
+component = "confabulator"
+route = "/..."
