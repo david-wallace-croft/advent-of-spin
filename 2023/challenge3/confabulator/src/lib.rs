@@ -6,14 +6,14 @@ use spin_sdk::http_component;
 
 #[derive(Deserialize)]
 struct Input {
-  capacity: usize,
-  kids: Vec<usize>,
-  weight: Vec<usize>,
+  characters: Vec<String>,
+  objects: Vec<String>,
+  place: String,
 }
 
 #[derive(Serialize)]
 struct Output {
-  kids: usize,
+  story: String,
 }
 
 impl IntoBody for Output {
@@ -30,10 +30,10 @@ fn handle_request(
     Method::POST => {
       let json_input: &Json<Input> = req.body();
       let output = Output {
-        kids: knapsack(
-          json_input.capacity,
-          &json_input.kids,
-          &json_input.weight,
+        story: confabulate(
+          &json_input.characters,
+          &json_input.objects,
+          &json_input.place,
         ),
       };
       (StatusCode::OK, Some(output))
@@ -48,16 +48,15 @@ fn handle_request(
   Ok(response)
 }
 
-fn knapsack(
-  capacity: usize,
-  kids: &[usize],
-  weight: &[usize],
-) -> usize {
-  let mut knapsack = vec![0; capacity + 1];
-  for i in 0..kids.len() {
-    for j in (weight[i]..=capacity).rev() {
-      knapsack[j] = knapsack[j].max(knapsack[j - weight[i]] + kids[i]);
-    }
+fn confabulate(
+  characters: &[String],
+  objects: &[String],
+  place: &str,
+) -> String {
+  let mut story = String::new();
+  story.push_str(&format!("The story begins in {}.\n", place));
+  for i in 0..characters.len() {
+    story.push_str(&format!("{} is {}.\n", characters[i], objects[i]));
   }
-  knapsack[capacity]
+  story
 }

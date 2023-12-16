@@ -24,7 +24,7 @@
 
 - Use hurl to run automated tests
 ```
-hurl --test test.hurl
+hurl --error-format long --test test.hurl
 ```
 
 ## Links
