@@ -55,8 +55,20 @@ fn confabulate(
   place: &str,
 ) -> Output {
   let prompt = make_prompt(characters, objects, place);
+  let options = llm::InferencingParams {
+    max_tokens: 1000,
+    repeat_penalty: 1.2,
+    repeat_penalty_last_n_token_count: 0,
+    temperature: 0.7,
+    top_k: 0,
+    top_p: 1.0,
+  };
   let infer_result: Result<InferencingResult, spin_sdk::llm::Error> =
-    llm::infer(llm::InferencingModel::Llama2Chat, &prompt);
+    llm::infer_with_options(
+      llm::InferencingModel::Llama2Chat,
+      &prompt,
+      options,
+    );
   let result = match &infer_result {
     Ok(inferencing_result) => format!("{:?}", inferencing_result),
     Err(error) => format!("Error: {:?}", error),
