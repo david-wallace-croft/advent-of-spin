@@ -7,6 +7,7 @@ name = "challenge3"
 version = "0.1.0"
 
 [component.confabulator]
+ai_models = ["llama2-chat"]
 allowed_outbound_hosts = []
 source = "confabulator/target/wasm32-wasi/release/confabulator.wasm"
 

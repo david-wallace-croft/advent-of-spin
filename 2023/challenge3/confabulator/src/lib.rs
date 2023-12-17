@@ -2,7 +2,7 @@ use http::{Method, StatusCode};
 use serde::{Deserialize, Serialize};
 use spin_sdk::http::conversions::IntoBody;
 use spin_sdk::http::{IntoResponse, Json, Response};
-use spin_sdk::http_component;
+use spin_sdk::{http_component, llm};
 
 #[derive(Deserialize)]
 struct Input {
@@ -53,10 +53,13 @@ fn confabulate(
   objects: &[String],
   place: &str,
 ) -> String {
-  let mut story = String::new();
-  story.push_str(&format!("The story begins in {}.\n", place));
+  let mut prompt = String::new();
+  prompt.push_str(&format!("The story begins in {}.\n", place));
   for i in 0..characters.len() {
-    story.push_str(&format!("{} is {}.\n", characters[i], objects[i]));
+    prompt.push_str(&format!("{} is {}.\n", characters[i], objects[i]));
   }
-  story
+  format!(
+    "{:?}",
+    llm::infer(llm::InferencingModel::Llama2Chat, &prompt)
+  )
 }
