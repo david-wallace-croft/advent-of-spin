@@ -64,7 +64,9 @@ fn confabulate(
   let story = match infer_result {
     Ok(inferencing_result) => inferencing_result.text,
     Err(_error) => String::new(),
-  };
+  }
+  .trim()
+  .to_owned();
   Output {
     prompt,
     result,
@@ -111,7 +113,7 @@ fn make_prompt(
   let mut prompt = "Tell an engaging Christmas story. \
     The story should have a happy ending. \
     The story should have a theme of joy. \
-    The story should be between 250 and 500 words long."
+    The story should be between 250 and 500 words long. "
     .to_owned();
   prompt.push_str(&format!(
     "The story should take place in the following location: {}. ",
