@@ -14,6 +14,8 @@ struct Input {
 
 #[derive(Serialize)]
 struct Output {
+  prompt: String,
+  result: String,
   story: String,
 }
 
@@ -30,13 +32,11 @@ fn handle_request(
   let (status, body): (StatusCode, Option<Output>) = match *req.method() {
     Method::POST => {
       let json_input: &Json<Input> = req.body();
-      let output = Output {
-        story: confabulate(
-          &json_input.characters,
-          &json_input.objects,
-          &json_input.place,
-        ),
-      };
+      let output = confabulate(
+        &json_input.characters,
+        &json_input.objects,
+        &json_input.place,
+      );
       (StatusCode::OK, Some(output))
     },
     _ => (StatusCode::METHOD_NOT_ALLOWED, None),
@@ -53,17 +53,22 @@ fn confabulate(
   characters: &[String],
   objects: &[String],
   place: &str,
-) -> String {
+) -> Output {
   let prompt = make_prompt(characters, objects, place);
-  fetch_story(&prompt)
-}
-
-fn fetch_story(prompt: &str) -> String {
-  let result: Result<InferencingResult, spin_sdk::llm::Error> =
+  let infer_result: Result<InferencingResult, spin_sdk::llm::Error> =
     llm::infer(llm::InferencingModel::Llama2Chat, &prompt);
-  match result {
-    Ok(result) => result.text,
+  let result = match &infer_result {
+    Ok(inferencing_result) => format!("{:?}", inferencing_result),
     Err(error) => format!("Error: {:?}", error),
+  };
+  let story = match infer_result {
+    Ok(inferencing_result) => inferencing_result.text,
+    Err(_error) => String::new(),
+  };
+  Output {
+    prompt,
+    result,
+    story,
   }
 }
 
@@ -80,14 +85,14 @@ fn make_include_prompt(
     return format!("The story should include the {} {}.", singular, &items[0]);
   }
   let mut include_prompt: String =
-    format!("The story should include the {} ", plural);
+    format!("The story should include the following {}: ", plural);
   for i in 0..items_length {
     if i == items_length - 1 {
       include_prompt.push_str("and ");
     }
     include_prompt.push_str(&items[i]);
     if i == items_length - 1 {
-      include_prompt.push_str(".");
+      include_prompt.push_str(". ");
     } else {
       include_prompt.push_str(", ");
     }
