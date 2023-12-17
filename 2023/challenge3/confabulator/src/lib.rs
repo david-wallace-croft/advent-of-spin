@@ -2,6 +2,7 @@ use http::{Method, StatusCode};
 use serde::{Deserialize, Serialize};
 use spin_sdk::http::conversions::IntoBody;
 use spin_sdk::http::{IntoResponse, Json, Response};
+use spin_sdk::llm::InferencingResult;
 use spin_sdk::{http_component, llm};
 
 #[derive(Deserialize)]
@@ -53,48 +54,55 @@ fn confabulate(
   objects: &[String],
   place: &str,
 ) -> String {
-  let mut prompt = r#"Tell an engaging Christmas story. "#.to_owned();
-  prompt.push_str(&format!("The story should take place in {}.\n", place));
-  let characters_length = characters.len();
-  if characters_length == 1 {
-    prompt.push_str("The story should include the character ");
-    prompt.push_str(&characters[0]);
-    prompt.push_str(".");
-  } else if characters_length > 1 {
-    prompt.push_str("The story should include the characters ");
-    for i in 0..characters_length {
-      if i == characters_length - 1 {
-        prompt.push_str("and ");
-      }
-      prompt.push_str(&characters[i]);
-      if i == characters_length - 1 {
-        prompt.push_str(".");
-      } else {
-        prompt.push_str(", ");
-      }
+  let prompt = make_prompt(characters, objects, place);
+  fetch_story(&prompt)
+}
+
+fn fetch_story(prompt: &str) -> String {
+  let result: Result<InferencingResult, spin_sdk::llm::Error> =
+    llm::infer(llm::InferencingModel::Llama2Chat, &prompt);
+  match result {
+    Ok(result) => result.text,
+    Err(error) => format!("Error: {:?}", error),
+  }
+}
+
+fn make_include_prompt(
+  items: &[String],
+  plural: &str,
+  singular: &str,
+) -> String {
+  let items_length = items.len();
+  if items_length == 0 {
+    return String::new();
+  }
+  if items_length == 1 {
+    return format!("The story should include the {} {}.", singular, &items[0]);
+  }
+  let mut include_prompt: String =
+    format!("The story should include the {} ", plural);
+  for i in 0..items_length {
+    if i == items_length - 1 {
+      include_prompt.push_str("and ");
+    }
+    include_prompt.push_str(&items[i]);
+    if i == items_length - 1 {
+      include_prompt.push_str(".");
+    } else {
+      include_prompt.push_str(", ");
     }
   }
-  let objects_length = objects.len();
-  if objects_length == 1 {
-    prompt.push_str("The story should include the object ");
-    prompt.push_str(&objects[0]);
-    prompt.push_str(".");
-  } else if objects_length > 1 {
-    prompt.push_str("The story should include the objects ");
-    for i in 0..objects_length {
-      if i == objects_length - 1 {
-        prompt.push_str("and ");
-      }
-      prompt.push_str(&objects[i]);
-      if i == objects_length - 1 {
-        prompt.push_str(".");
-      } else {
-        prompt.push_str(", ");
-      }
-    }
-  }
-  format!(
-    "{:?}",
-    llm::infer(llm::InferencingModel::Llama2Chat, &prompt)
-  )
+  include_prompt
+}
+
+fn make_prompt(
+  characters: &[String],
+  objects: &[String],
+  place: &str,
+) -> String {
+  let mut prompt = "Tell an engaging Christmas story. ".to_owned();
+  prompt.push_str(&format!("The story should take place in {}. ", place));
+  prompt.push_str(&make_include_prompt(characters, "characters", "character"));
+  prompt.push_str(&make_include_prompt(objects, "objects", "object"));
+  prompt
 }
