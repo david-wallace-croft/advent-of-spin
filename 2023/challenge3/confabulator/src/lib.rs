@@ -53,10 +53,45 @@ fn confabulate(
   objects: &[String],
   place: &str,
 ) -> String {
-  let mut prompt = String::new();
-  prompt.push_str(&format!("The story begins in {}.\n", place));
-  for i in 0..characters.len() {
-    prompt.push_str(&format!("{} is {}.\n", characters[i], objects[i]));
+  let mut prompt = r#"Tell an engaging Christmas story. "#.to_owned();
+  prompt.push_str(&format!("The story should take place in {}.\n", place));
+  let characters_length = characters.len();
+  if characters_length == 1 {
+    prompt.push_str("The story should include the character ");
+    prompt.push_str(&characters[0]);
+    prompt.push_str(".");
+  } else if characters_length > 1 {
+    prompt.push_str("The story should include the characters ");
+    for i in 0..characters_length {
+      if i == characters_length - 1 {
+        prompt.push_str("and ");
+      }
+      prompt.push_str(&characters[i]);
+      if i == characters_length - 1 {
+        prompt.push_str(".");
+      } else {
+        prompt.push_str(", ");
+      }
+    }
+  }
+  let objects_length = objects.len();
+  if objects_length == 1 {
+    prompt.push_str("The story should include the object ");
+    prompt.push_str(&objects[0]);
+    prompt.push_str(".");
+  } else if objects_length > 1 {
+    prompt.push_str("The story should include the objects ");
+    for i in 0..objects_length {
+      if i == objects_length - 1 {
+        prompt.push_str("and ");
+      }
+      prompt.push_str(&objects[i]);
+      if i == objects_length - 1 {
+        prompt.push_str(".");
+      } else {
+        prompt.push_str(", ");
+      }
+    }
   }
   format!(
     "{:?}",
