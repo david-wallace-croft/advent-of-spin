@@ -82,7 +82,10 @@ fn make_include_prompt(
     return String::new();
   }
   if items_length == 1 {
-    return format!("The story should include the {} {}.", singular, &items[0]);
+    return format!(
+      "The story should include the following {}: {}.",
+      singular, &items[0]
+    );
   }
   let mut include_prompt: String =
     format!("The story should include the following {}: ", plural);
@@ -105,8 +108,15 @@ fn make_prompt(
   objects: &[String],
   place: &str,
 ) -> String {
-  let mut prompt = "Tell an engaging Christmas story. ".to_owned();
-  prompt.push_str(&format!("The story should take place in {}. ", place));
+  let mut prompt = "Tell an engaging Christmas story. \
+    The story should have a happy ending. \
+    The story should have a theme of joy. \
+    The story should be between 250 and 500 words long."
+    .to_owned();
+  prompt.push_str(&format!(
+    "The story should take place in the following location: {}. ",
+    place
+  ));
   prompt.push_str(&make_include_prompt(characters, "characters", "character"));
   prompt.push_str(&make_include_prompt(objects, "objects", "object"));
   prompt
