@@ -3,7 +3,7 @@
 [![MIT licensed][mit-badge]][mit-url]
 
 [mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg
-[mit-url]: https://github.com/david-wallace-croft/spin-prototype/blob/main/LICENSE.txt
+[mit-url]: https://github.com/david-wallace-croft/advent-of-spin/blob/main/LICENSE.txt
 
 ## Installation for GitHub CodeSpaces
 
