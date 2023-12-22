@@ -57,14 +57,3 @@ async fn handle_request(_req: Request) -> anyhow::Result<impl IntoResponse> {
     .build();
   Ok(response)
 }
-
-fn solve_bulls_and_cows(guess: &str) -> BullsCowsOutput {
-  let bulls_cows_output = BullsCowsOutput {
-    bulls: 0,
-    cows: 0,
-    game_id: "game_id".to_string(),
-    guesses: 0,
-    solved: false,
-  };
-  bulls_cows_output
-}
