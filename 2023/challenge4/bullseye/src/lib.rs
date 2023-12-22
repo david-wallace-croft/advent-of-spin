@@ -33,12 +33,8 @@ impl IntoBody for BullseyeOutput {
 }
 
 #[http_component]
-// The trigger handler (in this case an HTTP handler) has to be async
-// so we can `await` the outbound send.
 async fn handle_request(_req: Request) -> anyhow::Result<impl IntoResponse> {
   let guess = "012".to_string();
-  // For this example, use the spin_sdk::http::RequestBuilder type
-  // for the outbound request.
   let outbound_req = Request::get(format!(
     "https://bulls-n-cows.fermyon.app/api?guess={guess}"
   ));
@@ -60,4 +56,15 @@ async fn handle_request(_req: Request) -> anyhow::Result<impl IntoResponse> {
     .status(StatusCode::OK)
     .build();
   Ok(response)
+}
+
+fn solve_bulls_and_cows(guess: &str) -> BullsCowsOutput {
+  let bulls_cows_output = BullsCowsOutput {
+    bulls: 0,
+    cows: 0,
+    game_id: "game_id".to_string(),
+    guesses: 0,
+    solved: false,
+  };
+  bulls_cows_output
 }
