@@ -7,7 +7,8 @@ name = "challenge4"
 version = "0.1.0"
 
 [component.bullseye]
-allowed_outbound_hosts = []
+# TODO: restrict this value
+allowed_outbound_hosts = ["https://bulls-n-cows.fermyon.app"]
 source = "bullseye/target/wasm32-wasi/release/bullseye.wasm"
 
 [component.bullseye.build]

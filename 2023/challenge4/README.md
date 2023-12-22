@@ -1,4 +1,4 @@
-# Advent of Spin 2023 Challenge 2
+# Advent of Spin 2023 Challenge 4
 
 [![MIT licensed][mit-badge]][mit-url]
 
@@ -24,13 +24,13 @@
 
 - Use hurl to run automated tests
 ```
-hurl --test test.hurl
+hurl --error-format long --test test.hurl
 ```
 
 ## Links
 
-- https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-2
+- https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-3
 
 ## History
 
-- Initial release: 2023-12-10
+- Initial release: 2023-12-22
