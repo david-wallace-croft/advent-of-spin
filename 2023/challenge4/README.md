@@ -29,7 +29,7 @@ hurl --error-format long --test test.hurl
 
 ## Links
 
-- https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-3
+- https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-4
 
 ## History
 
