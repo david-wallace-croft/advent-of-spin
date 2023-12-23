@@ -4,6 +4,9 @@ use spin_sdk::http::conversions::{FromBody, IntoBody};
 use spin_sdk::http::{send, IntoResponse, Request, Response};
 use spin_sdk::http_component;
 
+#[cfg(test)]
+mod test;
+
 #[derive(Clone, Debug, Deserialize, Serialize)]
 struct BullsCowsOutput {
   bulls: u8,
@@ -56,4 +59,32 @@ async fn handle_request(_req: Request) -> anyhow::Result<impl IntoResponse> {
     .status(StatusCode::OK)
     .build();
   Ok(response)
+}
+
+fn make_candidates() -> Vec<[u8; 3]> {
+  let mut candidates: Vec<[u8; 3]> = Vec::new();
+  let mut already_used: [bool; 5] = [false; 5];
+  for digit0 in 0..5 {
+    already_used[digit0] = true;
+    for digit1 in 0..5 {
+      if already_used[digit1] {
+        continue;
+      }
+      already_used[digit1] = true;
+      for digit2 in 0..5 {
+        if already_used[digit2] {
+          continue;
+        }
+        let candidate: [u8; 3] = [
+          digit0 as u8,
+          digit1 as u8,
+          digit2 as u8,
+        ];
+        candidates.push(candidate);
+      }
+      already_used[digit1] = false;
+    }
+    already_used[digit0] = false;
+  }
+  candidates
 }
