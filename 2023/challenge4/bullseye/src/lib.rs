@@ -46,7 +46,7 @@ impl IntoBody for BullseyeOutput {
 async fn handle_request(_req: Request) -> anyhow::Result<impl IntoResponse> {
   let mut candidates = make_candidates();
   let candidate = candidates.pop().unwrap();
-  let guess: String = (&candidate).into();
+  let guess = String::from(&candidate);
   let url = make_url(&candidate, None);
   dbg!(&url);
   let outbound_req = Request::get(url);
