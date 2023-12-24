@@ -19,8 +19,15 @@ struct BullsCowsOutput {
 
 #[derive(Debug, Serialize)]
 struct BullseyeOutput {
-  bulls_cows_output: BullsCowsOutput,
-  guess: String,
+  rounds: Vec<String>,
+}
+
+struct Candidate(u8, u8, u8);
+
+impl From<&Candidate> for String {
+  fn from(candidate: &Candidate) -> Self {
+    format!("{}{}{}", candidate.0, candidate.1, candidate.2)
+  }
 }
 
 impl FromBody for BullsCowsOutput {
@@ -37,10 +44,12 @@ impl IntoBody for BullseyeOutput {
 
 #[http_component]
 async fn handle_request(_req: Request) -> anyhow::Result<impl IntoResponse> {
-  let guess = "012".to_string();
-  let outbound_req = Request::get(format!(
-    "https://bulls-n-cows.fermyon.app/api?guess={guess}"
-  ));
+  let mut candidates = make_candidates();
+  let candidate = candidates.pop().unwrap();
+  let guess: String = (&candidate).into();
+  let url = make_url(&candidate, None);
+  dbg!(&url);
+  let outbound_req = Request::get(url);
   let response: http::Response<BullsCowsOutput> = send(outbound_req).await?;
   if response.status() != 200 {
     let response = Response::builder()
@@ -48,10 +57,16 @@ async fn handle_request(_req: Request) -> anyhow::Result<impl IntoResponse> {
       .build();
     return Ok(response);
   }
-  let response_body: &BullsCowsOutput = response.body();
+  let bulls_cows_output: &BullsCowsOutput = response.body();
+  let BullsCowsOutput {
+    bulls,
+    cows,
+    ..
+  } = bulls_cows_output;
+  let mut rounds = Vec::new();
+  rounds.push(format!("{guess} -> ({bulls}, {cows})"));
   let bullseye_output = BullseyeOutput {
-    bulls_cows_output: response_body.clone(),
-    guess,
+    rounds,
   };
   let response = Response::builder()
     .body(bullseye_output)
@@ -61,8 +76,8 @@ async fn handle_request(_req: Request) -> anyhow::Result<impl IntoResponse> {
   Ok(response)
 }
 
-fn make_candidates() -> Vec<[u8; 3]> {
-  let mut candidates: Vec<[u8; 3]> = Vec::new();
+fn make_candidates() -> Vec<Candidate> {
+  let mut candidates = Vec::new();
   let mut already_used: [bool; 5] = [false; 5];
   for digit0 in 0..5 {
     already_used[digit0] = true;
@@ -75,11 +90,7 @@ fn make_candidates() -> Vec<[u8; 3]> {
         if already_used[digit2] {
           continue;
         }
-        let candidate: [u8; 3] = [
-          digit0 as u8,
-          digit1 as u8,
-          digit2 as u8,
-        ];
+        let candidate = Candidate(digit0 as u8, digit1 as u8, digit2 as u8);
         candidates.push(candidate);
       }
       already_used[digit1] = false;
@@ -87,4 +98,16 @@ fn make_candidates() -> Vec<[u8; 3]> {
     already_used[digit0] = false;
   }
   candidates
+}
+
+fn make_url(
+  candidate: &Candidate,
+  game_id: Option<&str>,
+) -> String {
+  let guess: String = candidate.into();
+  let mut url = format!("https://bulls-n-cows.fermyon.app/api?guess={guess}");
+  if let Some(game_id) = game_id {
+    url.push_str(&format!("&id={game_id}"));
+  }
+  url
 }
