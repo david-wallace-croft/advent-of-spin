@@ -3,6 +3,9 @@ use serde::{Deserialize, Serialize};
 use spin_sdk::http::conversions::{FromBody, IntoBody};
 use spin_sdk::http::{send, IntoResponse, Request, Response};
 use spin_sdk::http_component;
+use std::fmt::{self, Display, Formatter};
+use std::thread;
+use std::time::Duration;
 
 #[cfg(test)]
 mod test;
@@ -24,9 +27,12 @@ struct BullseyeOutput {
 
 struct Candidate(u8, u8, u8);
 
-impl From<&Candidate> for String {
-  fn from(candidate: &Candidate) -> Self {
-    format!("{}{}{}", candidate.0, candidate.1, candidate.2)
+impl Display for Candidate {
+  fn fmt(
+    &self,
+    formatter: &mut Formatter<'_>,
+  ) -> fmt::Result {
+    write!(formatter, "{}{}{}", self.0, self.1, self.2)
   }
 }
 
@@ -45,26 +51,27 @@ impl IntoBody for BullseyeOutput {
 #[http_component]
 async fn handle_request(_req: Request) -> anyhow::Result<impl IntoResponse> {
   let mut candidates = make_candidates();
-  let candidate = candidates.pop().unwrap();
-  let url = make_url(&candidate, None);
-  dbg!(&url);
-  let outbound_req = Request::get(url);
-  let response: http::Response<BullsCowsOutput> = send(outbound_req).await?;
-  if response.status() != 200 {
-    let response = Response::builder()
-      .status(StatusCode::INTERNAL_SERVER_ERROR)
-      .build();
-    return Ok(response);
-  }
-  let bulls_cows_output: &BullsCowsOutput = response.body();
-  let BullsCowsOutput {
-    bulls,
-    cows,
-    ..
-  } = bulls_cows_output;
+  let mut game_id_option: Option<String> = None;
   let mut rounds = Vec::new();
-  let guess = String::from(&candidate);
-  rounds.push(format!("{guess} -> ({bulls}, {cows})"));
+  while let Some(candidate) = candidates.pop() {
+    let bulls_cows_output: BullsCowsOutput =
+      send_guess(&candidate, &game_id_option).await?;
+    let BullsCowsOutput {
+      bulls,
+      cows,
+      game_id,
+      guesses,
+      solved,
+    } = bulls_cows_output;
+    game_id_option = Some(game_id);
+    let round = format!("{guesses}: {candidate} -> ({bulls}, {cows})");
+    dbg!(&round);
+    rounds.push(round);
+    if solved {
+      break;
+    }
+    thread::sleep(Duration::from_millis(10_000));
+  }
   let bullseye_output = BullseyeOutput {
     rounds,
   };
@@ -102,12 +109,29 @@ fn make_candidates() -> Vec<Candidate> {
 
 fn make_url(
   candidate: &Candidate,
-  game_id: Option<&str>,
+  game_id: &Option<String>,
 ) -> String {
-  let guess: String = candidate.into();
-  let mut url = format!("https://bulls-n-cows.fermyon.app/api?guess={guess}");
+  let mut url =
+    format!("https://bulls-n-cows.fermyon.app/api?guess={candidate}");
   if let Some(game_id) = game_id {
     url.push_str(&format!("&id={game_id}"));
   }
   url
+}
+
+async fn send_guess(
+  guess: &Candidate,
+  game_id: &Option<String>,
+) -> anyhow::Result<BullsCowsOutput> {
+  let url = make_url(guess, game_id);
+  dbg!(&url);
+  let outbound_req = Request::get(url);
+  let response: http::Response<BullsCowsOutput> = send(outbound_req).await?;
+  match response.status() {
+    StatusCode::OK => {
+      let bulls_cows_output: &BullsCowsOutput = response.body();
+      Ok(bulls_cows_output.clone())
+    },
+    _ => Err(anyhow::anyhow!("Unexpected response status code")),
+  }
 }
