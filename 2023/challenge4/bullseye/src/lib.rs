@@ -123,7 +123,7 @@ fn make_hint(
   };
   let mut incorrect_guess_symbols = Vec::new();
   let mut unmatched_secret_symbols = Vec::new();
-  for index in 0..3 {
+  for index in 0..SLOT_COUNT {
     let guess_value: u8 = guess.symbols[index];
     let secret_value: u8 = secret.symbols[index];
     if guess_value == secret_value {
