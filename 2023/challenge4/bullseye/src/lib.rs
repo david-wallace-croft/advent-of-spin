@@ -7,7 +7,7 @@ use std::fmt::{self, Display, Formatter};
 use std::thread;
 use std::time::Duration;
 
-const REQUEST_DELAY_MILLIS: u64 = 10_000;
+const REQUEST_DELAY_MILLIS: u64 = 100;
 const SLOT_COUNT: usize = 3;
 const SYMBOL_COUNT: usize = 5;
 
@@ -104,14 +104,15 @@ async fn handle_request(_req: Request) -> anyhow::Result<impl IntoResponse> {
       bulls,
       cows,
     };
+    // TODO: minimax
     permutations
       .retain(|permutation| output_hint == make_hint(&guess, permutation));
-    dbg!(&permutations);
     thread::sleep(Duration::from_millis(REQUEST_DELAY_MILLIS));
   }
   let bullseye_output = BullseyeOutput {
     rounds,
   };
+  dbg!(&bullseye_output);
   let response = Response::builder()
     .body(bullseye_output)
     .header("Content-Type", "application/json")
