@@ -131,14 +131,14 @@ fn make_hint(
   };
   let mut incorrect_guess_symbols = Vec::new();
   let mut unmatched_secret_symbols = Vec::new();
-  for index in 0..SLOT_COUNT {
-    let guess_value: u8 = guess.symbols[index];
-    let secret_value: u8 = secret.symbols[index];
-    if guess_value == secret_value {
+  for slot_index in 0..SLOT_COUNT {
+    let guess_symbol: u8 = guess.symbols[slot_index];
+    let secret_symbol: u8 = secret.symbols[slot_index];
+    if guess_symbol == secret_symbol {
       hint.bulls += 1;
     } else {
-      incorrect_guess_symbols.push(guess_value);
-      unmatched_secret_symbols.push(secret_value);
+      incorrect_guess_symbols.push(guess_symbol);
+      unmatched_secret_symbols.push(secret_symbol);
     }
   }
   for incorrect_guess in incorrect_guess_symbols {
