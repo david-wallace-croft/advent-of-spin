@@ -29,6 +29,7 @@ struct BullseyeOutput {
   rounds: Vec<String>,
 }
 
+#[derive(PartialEq)]
 struct Hint {
   bulls: u8,
   cows: u8,
@@ -79,11 +80,10 @@ impl IntoBody for BullseyeOutput {
 
 #[http_component]
 async fn handle_request(_req: Request) -> anyhow::Result<impl IntoResponse> {
-  let mut guesses = make_permutations();
-  dbg!(&guesses);
+  let mut permutations = make_permutations();
   let mut game_id_option: Option<String> = None;
   let mut rounds = Vec::new();
-  while let Some(guess) = guesses.pop() {
+  while let Some(guess) = permutations.pop() {
     let bulls_cows_output: BullsCowsOutput =
       send_guess(&game_id_option, &guess).await?;
     let BullsCowsOutput {
@@ -100,6 +100,13 @@ async fn handle_request(_req: Request) -> anyhow::Result<impl IntoResponse> {
     if solved {
       break;
     }
+    let output_hint = Hint {
+      bulls,
+      cows,
+    };
+    permutations
+      .retain(|permutation| output_hint == make_hint(&guess, permutation));
+    dbg!(&permutations);
     thread::sleep(Duration::from_millis(REQUEST_DELAY_MILLIS));
   }
   let bullseye_output = BullseyeOutput {
