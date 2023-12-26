@@ -2,6 +2,6 @@ use super::*;
 
 #[test]
 fn test1() {
-  let candidates = make_candidates();
-  assert_eq!(candidates.len(), 60);
+  let permutations = make_permutations();
+  assert_eq!(permutations.len(), 60);
 }
