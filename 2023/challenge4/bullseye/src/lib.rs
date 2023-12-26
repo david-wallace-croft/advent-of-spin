@@ -36,14 +36,14 @@ struct Hint {
 
 #[derive(Debug)]
 struct Permutation {
-  values: [u8; SLOT_COUNT],
+  symbols: [u8; SLOT_COUNT],
 }
 
 impl Permutation {
   fn has_all_unique_symbols(&self) -> bool {
     let mut already_has_symbol = [false; SYMBOL_COUNT];
-    for value in &self.values {
-      let symbol_index = *value as usize;
+    for symbol in &self.symbols {
+      let symbol_index = *symbol as usize;
       if already_has_symbol[symbol_index] {
         return false;
       }
@@ -58,8 +58,8 @@ impl Display for Permutation {
     &self,
     formatter: &mut Formatter<'_>,
   ) -> fmt::Result {
-    for value in &self.values {
-      write!(formatter, "{value}")?;
+    for symbol in &self.symbols {
+      write!(formatter, "{symbol}")?;
     }
     Ok(())
   }
@@ -121,28 +121,28 @@ fn make_hint(
     bulls: 0,
     cows: 0,
   };
-  let mut incorrect_guess_values = Vec::new();
-  let mut unmatched_secret_values = Vec::new();
+  let mut incorrect_guess_symbols = Vec::new();
+  let mut unmatched_secret_symbols = Vec::new();
   for index in 0..3 {
-    let guess_value: u8 = guess.values[index];
-    let secret_value: u8 = secret.values[index];
+    let guess_value: u8 = guess.symbols[index];
+    let secret_value: u8 = secret.symbols[index];
     if guess_value == secret_value {
       hint.bulls += 1;
     } else {
-      incorrect_guess_values.push(guess_value);
-      unmatched_secret_values.push(secret_value);
+      incorrect_guess_symbols.push(guess_value);
+      unmatched_secret_symbols.push(secret_value);
     }
   }
-  for incorrect_guess in incorrect_guess_values {
+  for incorrect_guess in incorrect_guess_symbols {
     if let Some(index) =
-      unmatched_secret_values
+      unmatched_secret_symbols
         .iter()
         .position(|unmatched_secret_value| {
           *unmatched_secret_value == incorrect_guess
         })
     {
       hint.cows += 1;
-      unmatched_secret_values.swap_remove(index);
+      unmatched_secret_symbols.swap_remove(index);
     }
   }
   hint
@@ -151,14 +151,14 @@ fn make_hint(
 fn make_permutations() -> Vec<Permutation> {
   let mut permutations: Vec<Permutation> = Vec::new();
   for permutation_index in (0..SYMBOL_COUNT.pow(SLOT_COUNT as u32)).rev() {
-    let mut values = [0; SLOT_COUNT];
+    let mut symbols = [0; SLOT_COUNT];
     for slot_index in 0..SLOT_COUNT {
-      values[SLOT_COUNT - slot_index - 1] = ((permutation_index
+      symbols[SLOT_COUNT - slot_index - 1] = ((permutation_index
         / SYMBOL_COUNT.pow(slot_index as u32))
         % SYMBOL_COUNT) as u8;
     }
     let permutation = Permutation {
-      values,
+      symbols,
     };
     if permutation.has_all_unique_symbols() {
       permutations.push(permutation);
