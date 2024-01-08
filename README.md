@@ -1,4 +1,4 @@
-# Advent of Spin
+# CroftSoft Advent of Spin Solutions
 
 [![MIT licensed][mit-badge]][mit-url]
 
@@ -36,6 +36,9 @@ spin --version
 ## Links
 
 - https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-1
+- https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-2
+- https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-3
+- https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-4
 
 ## History
 
