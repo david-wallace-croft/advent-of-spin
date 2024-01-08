@@ -5,7 +5,7 @@
 [mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [mit-url]: https://github.com/david-wallace-croft/advent-of-spin/blob/main/LICENSE.txt
 
-## Installation for GitHub CodeSpaces
+## Installation of Spin on GitHub CodeSpaces
 
 - Open a terminal
 - Install Rust
@@ -35,10 +35,13 @@ spin --version
 
 ## Links
 
-- https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-1
-- https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-2
-- https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-3
-- https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-4
+- Fermyon Advent of Spin 2023 Challenges
+  - https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-1
+  - https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-2
+  - https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-3
+  - https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-4
+- CroftSoft Spin Prototype
+  - https://github.com/david-wallace-croft/spin-prototype
 
 ## History
 
