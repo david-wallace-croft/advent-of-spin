@@ -1,4 +1,4 @@
-# Advent of Spin 2023 Challenge 2
+# CroftSoft Advent of Spin 2023 Challenge 2 Solution
 
 [![MIT licensed][mit-badge]][mit-url]
 
