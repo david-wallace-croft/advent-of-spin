@@ -5,6 +5,16 @@
 [mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [mit-url]: https://github.com/david-wallace-croft/advent-of-spin/blob/main/LICENSE.txt
 
+## Links
+
+- CroftSoft Advent of Spin 2023 Challenge Solutions
+  - Solutions in the Rust programming language
+  - Slideshow presentations describing the solutions
+  - Includes a link to a YouTube video recording
+  - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2023
+- CroftSoft Spin Prototype
+  - https://github.com/david-wallace-croft/spin-prototype
+
 ## Installation of Spin on GitHub CodeSpaces
 
 - Open a terminal
@@ -32,16 +42,6 @@ source .profile
 cd -
 spin --version
 ```
-
-## Links
-
-- CroftSoft Advent of Spin 2023 Challenge Solutions
-  - Solutions in the Rust programming language
-  - Slideshow presentations describing the solutions
-  - Includes a link to a YouTube video recording
-  - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2023
-- CroftSoft Spin Prototype
-  - https://github.com/david-wallace-croft/spin-prototype
 
 ## History
 
