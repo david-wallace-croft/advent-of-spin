@@ -35,16 +35,11 @@ spin --version
 
 ## Links
 
-- Fermyon Advent of Spin 2023 Challenges
-  - https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-1
-  - https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-2
-  - https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-3
-  - https://github.com/fermyon/advent-of-spin/tree/main/2023/Challenge-4
 - CroftSoft Advent of Spin 2023 Challenge Solutions
-  - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2023/challenge1
-  - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2023/challenge2
-  - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2023/challenge3
-  - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2023/challenge4
+  - Solutions in the Rust programming language
+  - Slideshow presentations describing the solutions
+  - Includes a link to a YouTube video recording
+  - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2023
 - CroftSoft Spin Prototype
   - https://github.com/david-wallace-croft/spin-prototype
 
