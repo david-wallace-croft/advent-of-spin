@@ -1,0 +1,18 @@
+spin_manifest_version = 2
+
+[application]
+name = "challenge1"
+version = "0.1.0"
+authors = ["David Wallace Croft <david@CroftSoft.com>"]
+description = "Advent of Spin 2024 Challenge 1"
+
+[[trigger.http]]
+route = "/..."
+component = "challenge1"
+
+[component.challenge1]
+source = "target/wasm32-wasip1/release/challenge1.wasm"
+allowed_outbound_hosts = []
+[component.challenge1.build]
+command = "cargo build --target wasm32-wasip1 --release"
+watch = ["src/**/*.rs", "Cargo.toml"]

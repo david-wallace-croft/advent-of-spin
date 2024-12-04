@@ -26,7 +26,7 @@ rustc --version
 ```
 - Add the Wasm architecture
 ```
-rustup target add wasm32-wasi
+rustup target add wasm32-wasip1
 ```
 - Install Fermyon Spin
 ```

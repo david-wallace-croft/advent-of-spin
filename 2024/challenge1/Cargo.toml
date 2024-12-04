@@ -1,0 +1,16 @@
+[package]
+name = "challenge1"
+authors = ["David Wallace Croft <david@CroftSoft.com>"]
+description = "Advent of Spin 2024 Challenge 1"
+version = "0.0.0-SNAPSHOT"
+rust-version = "1.78"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+anyhow = "1"
+spin-sdk = "3.1.0"
+
+[workspace]
