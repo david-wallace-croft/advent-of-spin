@@ -78,6 +78,7 @@ name = "challenge1"
 version = "0.0.0-SNAPSHOT"
 dependencies = [
  "anyhow",
+ "serde_json",
  "spin-sdk",
 ]
 
