@@ -11,8 +11,10 @@ route = "/api/wishlists"
 component = "challenge1"
 
 [component.challenge1]
-source = "target/wasm32-wasip1/release/challenge1.wasm"
 allowed_outbound_hosts = []
+key_value_stores = ["default"]
+source = "target/wasm32-wasip1/release/challenge1.wasm"
+
 [component.challenge1.build]
 command = "cargo build --target wasm32-wasip1 --release"
 watch = ["src/**/*.rs", "Cargo.toml"]
