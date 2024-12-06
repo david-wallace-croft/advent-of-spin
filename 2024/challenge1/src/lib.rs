@@ -19,19 +19,7 @@ fn handle(request: Request) -> anyhow::Result<impl IntoResponse> {
 }
 
 /// Handles wishlist retrieval requests using the HTTP GET method.
-fn handle_wishlist_get(req: Request) -> Response {
-  // Extract the wishlist name from the request path.
-  // Return an HTTP status code 400 Bad Request if the path is empty.
-
-  let name = req.path().trim_start_matches('/');
-
-  if name.is_empty() {
-    return Response::builder()
-      .status(400)
-      .body("missing wishlist name")
-      .build();
-  }
-
+fn handle_wishlist_get(_request: Request) -> Response {
   // Open the default key-value store
 
   let store_result: Result<Store, Error> = Store::open_default();
@@ -46,52 +34,69 @@ fn handle_wishlist_get(req: Request) -> Response {
       .build();
   };
 
-  // Retrieve the wishlist from the key-value store
+  // Retrieve all wishlist keys from the key-value store
 
-  let items_result: Result<Option<Vec<u8>>, Error> = store.get(name);
+  let keys_result: Result<Vec<String>, Error> = store.get_keys();
 
-  // Return an HTTP status code 500 Internal Server Error if the store
-  // operation
-
-  let Ok(items_option) = items_result else {
+  let Ok(keys) = keys_result else {
     return Response::builder()
       .status(500)
-      .body("Error fetching wishlist")
+      .body("Error fetching wishlist keys")
       .build();
   };
 
-  let Some(items) = items_option else {
-    return Response::builder()
-      .status(404)
-      .body("wishlist not found")
-      .build();
-  };
+  // Fetch the values for each key in the key-value store
 
-  // Convert the bytes for items into a JSON array
+  let mut wishlists: Vec<Value> = Vec::new();
 
-  let items_result: Result<Vec<Value>, serde_json::Error> =
-    serde_json::from_slice(&items);
+  for key in keys {
+    let items_result: Result<Option<Vec<u8>>, Error> = store.get(&key);
 
-  let Ok(items) = items_result else {
-    return Response::builder()
-      .status(500)
-      .body("Error parsing wishlist")
-      .build();
-  };
+    let Ok(items_option) = items_result else {
+      return Response::builder()
+        .status(500)
+        .body("Error fetching wishlist")
+        .build();
+    };
 
-  // Return the wishlist items as a JSON array
+    let Some(items) = items_option else {
+      return Response::builder()
+        .status(404)
+        .body("wishlist not found")
+        .build();
+    };
+
+    let items_result: Result<Vec<Value>, serde_json::Error> =
+      serde_json::from_slice(&items);
+
+    let Ok(items) = items_result else {
+      return Response::builder()
+        .status(500)
+        .body("Error parsing wishlist")
+        .build();
+    };
+
+    wishlists.push(serde_json::json!({
+      "name": key,
+      "items": items,
+    }));
+  }
+
+  // Return the wishlists as a JSON array
+
+  // TODO: Get rid of the unwrap
 
   Response::builder()
     .header("Content-Type", "application/json")
-    .body(serde_json::to_vec(&items).unwrap())
+    .body(serde_json::to_vec(&wishlists).unwrap())
     .build()
 }
 
 /// Handles wishlist creation requests using the HTTP POST method.
-fn handle_wishlist_post(req: Request) -> Response {
+fn handle_wishlist_post(request: Request) -> Response {
   // Parse the request body as a JSON string
 
-  let body_bytes: &[u8] = req.body().as_ref();
+  let body_bytes: &[u8] = request.body().as_ref();
 
   let body_result: Result<Value, serde_json::Error> =
     serde_json::from_slice(body_bytes);
