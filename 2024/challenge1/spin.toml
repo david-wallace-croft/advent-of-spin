@@ -4,10 +4,10 @@ spin_manifest_version = 2
 name = "challenge1"
 version = "0.1.0"
 authors = ["David Wallace Croft <david@CroftSoft.com>"]
-description = "Advent of Spin 2024 Challenge 1"
+description = "Advent of Spin 2024 Challenge 1 Solution"
 
 [[trigger.http]]
-route = "/..."
+route = "/api/wishlists"
 component = "challenge1"
 
 [component.challenge1]
