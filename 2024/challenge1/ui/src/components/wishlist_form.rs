@@ -4,28 +4,31 @@ use dioxus::prelude::*;
 pub fn WishlistForm() -> Element {
   rsx! {
     form {
+      onsubmit: move |event| {
+        tracing::debug!("Submitted! {event:?}");
+      },
       input {
-        type: "text",
-        placeholder: "Name",
         name: "name",
+        placeholder: "Name",
+        type: "text",
       }
       input {
-        type: "text",
-        placeholder: "First Gift",
         name: "item0",
+        placeholder: "First Gift",
+        type: "text",
       }
       input {
-        type: "text",
-        placeholder: "Second Gift",
         name: "item1",
+        placeholder: "Second Gift",
+        type: "text",
       }
       input {
-        type: "text",
-        placeholder: "Third Gift",
         name: "item2",
+        placeholder: "Third Gift",
+        type: "text",
       }
       button {
-        type: "button",
+        r#type: "submit",
         "Add"
       }
     }

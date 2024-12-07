@@ -1,7 +1,7 @@
-use dioxus::prelude::*;
-
-use components::wishlist_form::WishlistForm;
-use components::wishlists::Wishlists;
+use self::components::wishlist_form::WishlistForm;
+use self::components::wishlists::Wishlists;
+use ::dioxus::prelude::*;
+use ::tracing::Level;
 
 mod components;
 
@@ -9,6 +9,8 @@ const FAVICON: Asset = asset!("/assets/favicon.ico");
 const MAIN_CSS: Asset = asset!("/assets/styling/main.css");
 
 fn main() {
+  dioxus_logger::init(Level::DEBUG).expect("Failed to initialize logger");
+
   launch(App);
 }
 
