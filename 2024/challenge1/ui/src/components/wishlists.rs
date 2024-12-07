@@ -53,21 +53,3 @@ pub fn Wishlists() -> Element {
     },
   }
 }
-
-// rsx! {
-//   form {
-//     input {
-//       type: "text",
-//       placeholder: "Name",
-//       name: "name",
-//     }
-//     input {
-//       type: "text",
-//       placeholder: "Items",
-//       name: "items",
-//     }
-//     button {
-//       type: "button",
-//       "Add"
-//     }
-//   }
