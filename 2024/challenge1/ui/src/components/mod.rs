@@ -1,6 +1,1 @@
-mod hero;
-pub use hero::Hero;
-
-
-
-
+pub mod wishlists;
