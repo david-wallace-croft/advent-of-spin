@@ -1,13 +1,7 @@
+use super::super::data::wishlist::Wishlist;
 use ::dioxus::dioxus_core::internal::generational_box::GenerationalRef;
 use ::dioxus::prelude::*;
-use ::serde::{Deserialize, Serialize};
 use ::std::cell::Ref;
-
-#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
-struct Wishlist {
-  name: String,
-  items: Vec<String>,
-}
 
 async fn get_wishlists() -> Result<Vec<Wishlist>, anyhow::Error> {
   let response: reqwest::Response =
