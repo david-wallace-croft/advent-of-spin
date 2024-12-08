@@ -7,51 +7,34 @@
 
 ![Screenshot 2024-12-08](./media/screenshot-2024-12-08-a.jpg)
 
-## Usage
+## Build and Deploy
 
-- Install the Fermyon Spin command line utility "spin"
-  - https://developer.fermyon.com/spin/v2/install
-- spin build
-- spin up
-  - If running on Windows, you might have to do some workarounds
-    - See https://github.com/fermyon/spin/issues/2112
-    - Build spin-fileserver in a sibling directory
-      - cd ../spin-fileserver
-      - cargo build --release
-      - cd ../spin-prototype
-    - Update the path to spin_static_fs.wasm in spin.toml
-    - spin up --direct-mounts
+- Install the Command Line Interfaces (CLIs) for Dioxus and Fermyon Spin
+- Build and bundle the front-end
+```
+cd ui/
+dx bundle
+```
+- Deploy to the Fermyon Spin cloud
+```
+cd ../
+spin deploy
+```
 
 ## Automated Testing
 
+- Start the server locally
+```
+spin up
+```
 - Use hurl to run automated tests
 ```
 hurl --test test.hurl
 ```
 
-## Manual Testing
-
-- Demonstrates using a static file server
-- http://localhost:3000/
-- From a Key-Value store example
-  - Stores the value "helicopter" for the key "advent"
-```
-curl -i -X POST \
-  -H "Content-Type: application/json" \
-  -d "{\"value\":\"helicopter\"}" \
-  localhost:3000/data?advent
-```
-- curl -i -X GET localhost:3000/data?advent
-  - Retrieves the value "{\"value\":\"helicopter\"}" for the key "advent"
-- curl -i -X DELETE localhost:3000/data?advent
-  - Deletes the value for the key "advent"
-- curl -i -X GET localhost:3000/data?advent
-  - Fails to retrieve the deleted value for the key "advent"
-
 ## Links
 
 - https://github.com/fermyon/advent-of-spin/tree/main/2024/Challenge-1
-- https://github.com/fermyon/spin/tree/main/examples/rust-key-value
 
 ## History
 
