@@ -4515,6 +4515,7 @@ dependencies = [
  "dioxus-logger",
  "reqwest",
  "serde",
+ "serde_json",
  "tracing",
 ]
 

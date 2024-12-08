@@ -1,40 +1,49 @@
 use super::super::data::wishlist::Wishlist;
-use dioxus::prelude::*;
+use ::dioxus::prelude::*;
+use ::tracing::*;
 
 #[allow(non_snake_case)]
 pub fn WishlistForm() -> Element {
   rsx! {
     form {
       onsubmit: move |event| {
-        tracing::debug!("Submitted! {event:?}");
+        debug!("Submitted! {event:?}");
 
         let wishlist: Option<Wishlist> = Wishlist::parse_wishlist(event);
 
         if let Some(wishlist) = wishlist {
-          tracing::debug!("Wishlist: {wishlist:?}");
+          debug!("Wishlist: {wishlist:?}");
+
+          let _future = use_resource(move || {
+            let wishlist_clone = wishlist.clone();
+
+            async {
+              Wishlist::upload_wishlist(wishlist_clone).await;
+            }
+          });
         } else {
-          tracing::debug!("Invalid Wishlist");
+          debug!("Invalid Wishlist");
         }
       },
       input {
         name: "name",
         placeholder: "Name",
-        type: "text",
+        r#type: "text",
       }
       input {
         name: "item0",
         placeholder: "First Gift",
-        type: "text",
+        r#type: "text",
       }
       input {
         name: "item1",
         placeholder: "Second Gift",
-        type: "text",
+        r#type: "text",
       }
       input {
         name: "item2",
         placeholder: "Third Gift",
-        type: "text",
+        r#type: "text",
       }
       button {
         r#type: "submit",

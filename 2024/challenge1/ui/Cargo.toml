@@ -12,6 +12,7 @@ dioxus = { version = "0.6.0-rc.0", features = [] }
 dioxus-logger = "0.6.0"
 reqwest = { version = "0.12.9", features = ["json"] }
 serde = { version = "1.0.215", features = ["derive"] }
+serde_json = "1.0.133"
 tracing = "0.1.41"
 
 [features]
