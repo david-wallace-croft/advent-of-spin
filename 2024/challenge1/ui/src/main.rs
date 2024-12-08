@@ -28,6 +28,48 @@ fn App() -> Element {
       src: IMAGE_SRC_SANTA_CLAUS
     }
 
+    div {
+    p {
+    "Solution to the "
+    a {
+      href:
+        "https://github.com/fermyon/advent-of-spin/tree/main/2024/Challenge-1",
+      target: "_blank",
+      "Fermyon Advent of Spin 2024 Challenge 1"
+    }
+    br { }
+    "Both front-end and back-end use Rust compiled to WebAssembly (Wasm)"
+    br { }
+    "Author: "
+    a {
+      href: "https://www.croftsoft.com/people/david/research/rust-wasm/",
+      target: "_blank",
+      "David Wallace Croft, M.Sc."
+    }
+    br { }
+    "Back-end: "
+    a {
+      href: "https://www.fermyon.com/spin",
+      target: "_blank",
+      "Fermyon Spin 3.0"
+    }
+    br { }
+    "Front-end: "
+    a {
+      href: "https://dioxuslabs.com/",
+      target: "_blank",
+      "Dioxus 0.6"
+    }
+    br { }
+    "Image: "
+    a {
+      href: "https://gemini.google.com/",
+      target: "_blank",
+      "Google Gemini / Imagen 3"
+    }
+    }
+    }
+
     WishlistForm {}
 
     Wishlists {}
