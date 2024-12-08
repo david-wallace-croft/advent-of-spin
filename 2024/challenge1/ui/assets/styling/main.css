@@ -13,6 +13,11 @@ body {
     align-items: center;
 }
 
+img.app-santa-claus {
+    float: right;
+    width: 50%;
+}
+
 #links {
     width: 400px;
     text-align: left;

@@ -7,6 +7,7 @@ mod components;
 mod data;
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
+const IMAGE_SRC_SANTA_CLAUS: Asset = asset!("/assets/santa-claus.jpg");
 const MAIN_CSS: Asset = asset!("/assets/styling/main.css");
 
 fn main() {
@@ -21,6 +22,11 @@ fn App() -> Element {
     document::Link { rel: "icon", href: FAVICON }
 
     document::Link { rel: "stylesheet", href: MAIN_CSS }
+
+    img {
+      class: "app-santa-claus",
+      src: IMAGE_SRC_SANTA_CLAUS
+    }
 
     WishlistForm {}
 
