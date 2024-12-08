@@ -40,6 +40,7 @@ fn App() -> Element {
     br { }
     "Both front-end and back-end use Rust compiled to WebAssembly (Wasm)"
     br { }
+    br { }
     "Author: "
     a {
       href: "https://www.croftsoft.com/people/david/research/rust-wasm/",
@@ -67,6 +68,15 @@ fn App() -> Element {
       target: "_blank",
       "Google Gemini / Imagen 3"
     }
+    br { }
+    "Repository: "
+    a {
+      href:
+        "https://github.com/david-wallace-croft/advent-of-spin/tree/main/2024",
+      target: "_blank",
+      "https://github.com/david-wallace-croft/advent-of-spin/tree/main/2024"
+    }
+    br { }
     }
     }
 
