@@ -5,6 +5,8 @@
 [mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [mit-url]: https://github.com/david-wallace-croft/advent-of-spin/blob/main/LICENSE.txt
 
+![Screenshot 2024-12-08](./media/screenshot-2024-12-08.jpg)
+
 ## Usage
 
 - Install the Fermyon Spin command line utility "spin"
