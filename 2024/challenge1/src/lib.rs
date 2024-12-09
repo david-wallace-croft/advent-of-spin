@@ -30,7 +30,7 @@ fn handle_wishlist_get(_request: Request) -> Response {
   let Ok(store) = store_result else {
     return Response::builder()
       .status(500)
-      .body("failed to open store")
+      .body("Failed to open store")
       .build();
   };
 
@@ -62,7 +62,7 @@ fn handle_wishlist_get(_request: Request) -> Response {
     let Some(items) = items_option else {
       return Response::builder()
         .status(404)
-        .body("wishlist not found")
+        .body("Wishlist not found")
         .build();
     };
 
@@ -82,17 +82,25 @@ fn handle_wishlist_get(_request: Request) -> Response {
     }));
   }
 
-  // Return the wishlists as a JSON array
+  // Return the wishlists as a byte array
 
-  // TODO: Get rid of the unwrap
+  let json_byte_vec_result: Result<Vec<u8>, serde_json::Error> =
+    serde_json::to_vec(&wishlists);
+
+  let Ok(json_byte_vec) = json_byte_vec_result else {
+    return Response::builder()
+      .status(500)
+      .body("Error converting wishlists to bytes")
+      .build();
+  };
 
   Response::builder()
     .header("Content-Type", "application/json")
-    .body(serde_json::to_vec(&wishlists).unwrap())
+    .body(json_byte_vec)
     .build()
 }
 
-/// Handles wishlist creation requests using the HTTP POST method.
+/// Handles wishlist creation requests using the HTTP POST method
 fn handle_wishlist_post(request: Request) -> Response {
   // Parse the request body as a JSON string
 
@@ -114,6 +122,7 @@ fn handle_wishlist_post(request: Request) -> Response {
   let name_option: Option<&str> = body["name"].as_str();
 
   let Some(name) = name_option else {
+    // TODO: Maybe this should be a 422 Unprocessable Entity instead
     return Response::builder()
       .status(400)
       .body("name field missing")
@@ -126,6 +135,7 @@ fn handle_wishlist_post(request: Request) -> Response {
   let items_option: Option<&Vec<Value>> = body["items"].as_array();
 
   let Some(items) = items_option else {
+    // TODO: Maybe this should be a 422 Unprocessable Entity instead
     return Response::builder()
       .status(400)
       .body("items field missing")
