@@ -8,3 +8,4 @@
   - https://github.com/fermyon/advent-of-spin/tree/main/2024/Challenge-1
 - CroftSoft Advent of Spin 2024 Challenge Solutions
   - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2024/challenge1
+  - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2024/challenge2
