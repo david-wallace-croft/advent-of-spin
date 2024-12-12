@@ -1,7 +1,7 @@
 [package]
-name = "challenge1"
+name = "challenge2"
 authors = ["David Wallace Croft <david@CroftSoft.com>"]
-description = "Advent of Spin 2024 Challenge 1"
+description = "Advent of Spin 2024 Challenge 2"
 version = "0.1.0"
 rust-version = "1.78"
 edition = "2021"

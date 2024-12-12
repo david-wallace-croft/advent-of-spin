@@ -1,21 +1,21 @@
 spin_manifest_version = 2
 
 [application]
-name = "challenge1"
+name = "challenge2"
 version = "0.1.0"
 authors = ["David Wallace Croft <david@CroftSoft.com>"]
-description = "Advent of Spin 2024 Challenge 1 Solution"
+description = "Advent of Spin 2024 Challenge 2 Solution"
 
 [[trigger.http]]
 route = "/api/wishlists"
-component = "challenge1"
+component = "challenge2"
 
-[component.challenge1]
+[component.challenge2]
 allowed_outbound_hosts = []
 key_value_stores = ["default"]
-source = "target/wasm32-wasip1/release/challenge1.wasm"
+source = "target/wasm32-wasip1/release/challenge2.wasm"
 
-[component.challenge1.build]
+[component.challenge2.build]
 command = "cargo build --target wasm32-wasip1 --release"
 watch = ["src/**/*.rs", "Cargo.toml"]
 

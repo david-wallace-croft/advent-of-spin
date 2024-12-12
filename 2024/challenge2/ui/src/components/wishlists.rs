@@ -5,7 +5,7 @@ use ::std::cell::Ref;
 
 async fn get_wishlists() -> Result<Vec<Wishlist>, anyhow::Error> {
   let response: reqwest::Response =
-    reqwest::get("https://challenge1-fbgn5xod.fermyon.app/api/wishlists")
+    reqwest::get("https://challenge2-xqnag9fm.fermyon.app/api/wishlists")
       .await?;
 
   let wishlists = response.json().await?;

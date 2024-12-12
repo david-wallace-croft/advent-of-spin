@@ -1,4 +1,4 @@
-# CroftSoft Advent of Spin 2024 Challenge 1 Solution
+# CroftSoft Advent of Spin 2024 Challenge 2 Solution
 
 [![MIT licensed][mit-badge]][mit-url]
 
@@ -38,4 +38,4 @@ hurl --test test.hurl
 
 ## History
 
-- Initial release: 2024-12-03
+- Initial release: 2024-12-10

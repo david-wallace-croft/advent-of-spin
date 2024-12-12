@@ -6,7 +6,7 @@ name = "ui"
 [web.app]
 
 # HTML title tag content
-title = "Challenge 1"
+title = "Challenge 2"
 
 # include `assets` in web platform
 [web.resource]

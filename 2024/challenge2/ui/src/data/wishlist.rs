@@ -56,7 +56,7 @@ impl Wishlist {
     debug!("Uploading wishlist: {wishlist_json}");
 
     let _response = client
-      .post("https://challenge1-fbgn5xod.fermyon.app/api/wishlists")
+      .post("https://challenge2-xqnag9fm.fermyon.app/api/wishlists")
       .header("Content-Type", "application/json")
       .body(wishlist_json)
       .send()
