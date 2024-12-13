@@ -1,2 +1,5 @@
+*.wasm
+dist/
+node_modules/
 .spin/
 target/
