@@ -5,6 +5,7 @@ use ::spin_sdk::http::Router;
 use ::spin_sdk::http::{IntoResponse, Request, Response};
 use ::spin_sdk::http_component;
 use ::spin_sdk::key_value::{Error, Store};
+use ::std::borrow::Cow;
 
 mod bindings;
 
@@ -27,16 +28,15 @@ fn naughty_or_nice_get(
   _request: Request,
   params: Params,
 ) -> anyhow::Result<impl IntoResponse> {
-  // TODO: "As the name of the person is sent to the API as
-  //   part of the URL, you might process the name - in some way
-  //   - to make it human-readable."
-
   let name: &str = params.get("name").unwrap_or("Grinch");
 
-  let score = calculator::calculate(name);
+  let decoded_name: Cow<str> =
+    urlencoding::decode(name).unwrap_or(Cow::from(name.to_string()));
+
+  let score = calculator::calculate(&decoded_name);
 
   let value: Value = serde_json::json!({
-    "name": name,
+    "name": decoded_name,
     "score": score,
   });
 
