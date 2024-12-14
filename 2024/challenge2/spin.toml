@@ -7,7 +7,7 @@ authors = ["David Wallace Croft <david@CroftSoft.com>"]
 description = "Advent of Spin 2024 Challenge 2 Solution"
 
 [[trigger.http]]
-route = "/api/wishlists"
+route = "/api/..."
 component = "challenge2"
 
 [component.challenge2]
