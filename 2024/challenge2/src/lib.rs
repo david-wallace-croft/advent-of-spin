@@ -37,7 +37,7 @@ fn naughty_or_nice_get(
 
   let response: Response = Response::builder()
     .header("Content-Type", "text/plain")
-    .body(format!("Hello, {}!", calculated))
+    .body(format!("{}", calculated))
     .build();
 
   Ok(response)
