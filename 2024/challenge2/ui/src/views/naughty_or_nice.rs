@@ -1,3 +1,4 @@
+use super::super::components::name_form::NameForm;
 use super::super::components::score::Score;
 use ::dioxus::prelude::*;
 
@@ -9,7 +10,7 @@ pub fn NaughtyOrNice() -> Element {
   rsx! {
     document::Link { rel: "stylesheet", href: NAUGHTY_OR_NICE_CSS}
 
-    p { "Are you on the naughty or nice list?" }
+    NameForm { }
 
     Score { }
   }
