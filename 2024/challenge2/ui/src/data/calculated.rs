@@ -1,4 +1,5 @@
 use ::dioxus::prelude::*;
+use reqwest::{Error, Response};
 use ::serde::{Deserialize, Serialize};
 use ::std::collections::HashMap;
 use ::std::rc::Rc;
@@ -31,7 +32,7 @@ impl Calculated {
   pub async fn request_calculation(name: String) {
     let client = reqwest::Client::new();
 
-    let response = client
+    let response_result: Result<Response, Error> = client
       .get(format!(
         "https://challenge2-xqnag9fm.fermyon.app/api/naughty-or-nice/{}",
         name
@@ -39,6 +40,24 @@ impl Calculated {
       .send()
       .await;
 
+    debug!("Response result: {response_result:?}");
+
+    let Ok(response) = response_result else {
+      error!("Failed to get response");
+
+      return;
+    };
+
     debug!("Response: {response:?}");
+
+    let calculated_result: Result<Calculated, Error> = response.json().await;
+
+    let Ok(calculated) = calculated_result else {
+      error!("Failed to parse calculated");
+
+      return;
+    };
+
+    debug!("Calculated: {calculated:?}");
   }
 }

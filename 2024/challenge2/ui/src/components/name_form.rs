@@ -33,7 +33,7 @@ pub fn NameForm() -> Element {
       }
       button {
         r#type: "submit",
-        "Add"
+        "Calculate"
       }
     }
   }
