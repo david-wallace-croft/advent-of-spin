@@ -1,5 +1,5 @@
 use ::dioxus::prelude::*;
-use reqwest::{Error, Response};
+use ::reqwest::{Error, Response};
 use ::serde::{Deserialize, Serialize};
 use ::std::collections::HashMap;
 use ::std::rc::Rc;
@@ -59,5 +59,14 @@ impl Calculated {
     };
 
     debug!("Calculated: {calculated:?}");
+  }
+}
+
+impl Default for Calculated {
+  fn default() -> Self {
+    Self {
+      name: "Loading...".to_string(),
+      score: 0,
+    }
   }
 }

@@ -16,33 +16,35 @@ async fn get_calculated() -> Result<Calculated, anyhow::Error> {
 
 #[allow(non_snake_case)]
 pub fn Score() -> Element {
+  use_context_provider(|| Signal::new(Calculated::default()));
+
+  let calculated_signal: Signal<Calculated> =
+    consume_context::<Signal<Calculated>>();
+
+  let calculated: GenerationalRef<Ref<Calculated>> =
+    calculated_signal.read_unchecked();
+
   let calculated_resource: Resource<Result<Calculated, anyhow::Error>> =
     use_resource(move || get_calculated());
 
-  let calculated_option: GenerationalRef<
+  let _calculated_option: GenerationalRef<
     Ref<Option<Result<Calculated, anyhow::Error>>>,
   > = calculated_resource.read_unchecked();
 
-  match &*calculated_option {
-    Some(Ok(calculated)) => rsx! {
-      table {
-      thead {
-      tr {
-      th { "Name" }
-      th { "Score" }
-      }
-      }
-      tbody {
-      tr {
-      td { "{&calculated.name}" }
-      td { "{&calculated.score}" }
-      }
-      }
-      },
-    },
-    Some(Err(err)) => rsx! { "Error loading calculated: {err}" },
-    None => {
-      rsx! {"Loading calculated..."}
-    },
+  rsx! {
+    table {
+    thead {
+    tr {
+    th { "Name" }
+    th { "Score" }
+    }
+    }
+    tbody {
+    tr {
+    td { "{&calculated.name}" }
+    td { "{&calculated.score}" }
+    }
+    }
+    }
   }
 }
