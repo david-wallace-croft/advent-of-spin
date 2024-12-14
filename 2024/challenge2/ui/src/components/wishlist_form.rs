@@ -2,7 +2,7 @@ use super::super::data::wishlist::Wishlist;
 use ::dioxus::prelude::*;
 use ::tracing::*;
 
-#[allow(non_snake_case)]
+#[component]
 pub fn WishlistForm() -> Element {
   rsx! {
     form {

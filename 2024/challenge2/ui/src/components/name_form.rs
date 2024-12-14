@@ -2,8 +2,33 @@ use super::super::data::calculated::Calculated;
 use ::dioxus::prelude::*;
 use ::tracing::*;
 
-#[allow(non_snake_case)]
+async fn update_calculated(
+  mut calculated_signal: Signal<Calculated>,
+  name_option: Option<String>,
+) {
+  let Some(name) = name_option else {
+    return;
+  };
+
+  debug!("Name: {name:?}");
+
+  let calculated_option: Option<Calculated> =
+    Calculated::request_calculation(&name).await;
+
+  if let Some(calculated) = calculated_option {
+    debug!("Calculated: {calculated:?}");
+
+    let calculated_clone = calculated.clone();
+
+    *calculated_signal.write() = calculated_clone;
+  }
+}
+
+#[component]
 pub fn NameForm() -> Element {
+  let calculated_signal: Signal<Calculated> =
+    consume_context::<Signal<Calculated>>();
+
   rsx! {
     form {
       onsubmit: move |event| {
@@ -12,19 +37,7 @@ pub fn NameForm() -> Element {
         let name_option: Option<String>
           = Calculated::parse_name(event);
 
-        if let Some(name) = name_option {
-          debug!("Name: {name:?}");
-
-          let _future = use_resource(move || {
-            let name_clone = name.clone();
-
-            async {
-              Calculated::request_calculation(name_clone).await;
-            }
-          });
-        } else {
-          debug!("Invalid name");
-        }
+        update_calculated(calculated_signal.clone(), name_option)
       },
       input {
         name: "name",

@@ -31,7 +31,7 @@ fn naughty_or_nice_get(
   //   part of the URL, you might process the name - in some way
   //   - to make it human-readable."
 
-  let name: &str = params.get("name").unwrap_or("Krampus");
+  let name: &str = params.get("name").unwrap_or("Grinch");
 
   let score = calculator::calculate(name);
 

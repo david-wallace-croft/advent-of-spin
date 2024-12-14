@@ -13,7 +13,7 @@ async fn get_wishlists() -> Result<Vec<Wishlist>, anyhow::Error> {
   Ok(wishlists)
 }
 
-#[allow(non_snake_case)]
+#[component]
 pub fn Wishlists() -> Element {
   let wishlists_resource: Resource<Result<Vec<Wishlist>, anyhow::Error>> =
     use_resource(move || get_wishlists());

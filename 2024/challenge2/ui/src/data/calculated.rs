@@ -28,8 +28,7 @@ impl Calculated {
     Some(name)
   }
 
-  // TODO: Can this be a string slice?
-  pub async fn request_calculation(name: String) {
+  pub async fn request_calculation(name: &str) -> Option<Calculated> {
     let client = reqwest::Client::new();
 
     let response_result: Result<Response, Error> = client
@@ -45,7 +44,7 @@ impl Calculated {
     let Ok(response) = response_result else {
       error!("Failed to get response");
 
-      return;
+      return None;
     };
 
     debug!("Response: {response:?}");
@@ -55,10 +54,12 @@ impl Calculated {
     let Ok(calculated) = calculated_result else {
       error!("Failed to parse calculated");
 
-      return;
+      return None;
     };
 
     debug!("Calculated: {calculated:?}");
+
+    Some(calculated)
   }
 }
 
