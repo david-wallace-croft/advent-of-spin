@@ -16,10 +16,9 @@ cd ui/
 dx bundle
 ```
 - Compile the Wasm
-```
 cd string-reverse
 npm install
-npm run all
+npm run build
 ```
 - Install wasm-tools
 ```
@@ -27,7 +26,7 @@ cargo install --locked wasm-tools
 ```
 - View the WIT
 ```
-wasm-tools component wit string-reverse/string-reverse.wasm
+wasm-tools component wit string-reverse.wasm
 ```
 - Install the plugin
 ```
@@ -35,15 +34,19 @@ spin plugins install --url https://github.com/fermyon/spin-deps-plugin/releases/
 ```
 - Add the dependency
 ```
+cd ../
 spin deps add string-reverse/string-reverse.wasm
 ```
+- When prompted
+  - Select "example:string-reverse@0.1.0"
+  - Select "reverse"
+  - Select "challenge2"
 - Generate the bindings
 ```
 spin deps generate-bindings -L rust -o src/bindings -c challenge2
 ```
 - Deploy to the Fermyon Spin cloud
 ```
-cd ../
 spin deploy
 ```
 
