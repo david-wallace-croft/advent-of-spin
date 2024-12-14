@@ -24,6 +24,10 @@ fn naughty_or_nice_get(
   _request: Request,
   params: Params,
 ) -> anyhow::Result<impl IntoResponse> {
+  // TODO: "As the name of the person is sent to the API as
+  //   part of the URL, you might process the name - in some way
+  //   - to make it human-readable."
+
   let name: &str = params.get("name").unwrap_or("World");
 
   let response: Response = Response::builder()
