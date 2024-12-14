@@ -2,28 +2,6 @@ use super::super::data::calculated::Calculated;
 use ::dioxus::prelude::*;
 use ::tracing::*;
 
-async fn update_calculated(
-  mut calculated_signal: Signal<Calculated>,
-  name_option: Option<String>,
-) {
-  let Some(name) = name_option else {
-    return;
-  };
-
-  debug!("Name: {name:?}");
-
-  let calculated_option: Option<Calculated> =
-    Calculated::request_calculation(&name).await;
-
-  if let Some(calculated) = calculated_option {
-    debug!("Calculated: {calculated:?}");
-
-    let calculated_clone = calculated.clone();
-
-    *calculated_signal.write() = calculated_clone;
-  }
-}
-
 #[component]
 pub fn NameForm() -> Element {
   let calculated_signal: Signal<Calculated> =
@@ -49,5 +27,27 @@ pub fn NameForm() -> Element {
         "Calculate"
       }
     }
+  }
+}
+
+async fn update_calculated(
+  mut calculated_signal: Signal<Calculated>,
+  name_option: Option<String>,
+) {
+  let Some(name) = name_option else {
+    return;
+  };
+
+  debug!("Name: {name:?}");
+
+  let calculated_option: Option<Calculated> =
+    Calculated::request_calculation(&name).await;
+
+  if let Some(calculated) = calculated_option {
+    debug!("Calculated: {calculated:?}");
+
+    let calculated_clone = calculated.clone();
+
+    *calculated_signal.write() = calculated_clone;
   }
 }
