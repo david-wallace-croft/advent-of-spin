@@ -31,16 +31,33 @@ fn naughty_or_nice_get(
   //   part of the URL, you might process the name - in some way
   //   - to make it human-readable."
 
-  let name: &str = params.get("name").unwrap_or("World");
+  let name: &str = params.get("name").unwrap_or("Krampus");
 
-  let calculated = calculator::calculate(name);
+  let score = calculator::calculate(name);
 
-  let response: Response = Response::builder()
-    .header("Content-Type", "text/plain")
-    .body(format!("{}", calculated))
-    .build();
+  let value: Value = serde_json::json!({
+    "name": name,
+    "score": score,
+  });
 
-  Ok(response)
+  let json_byte_vec_result: Result<Vec<u8>, serde_json::Error> =
+    serde_json::to_vec(&value);
+
+  let Ok(json_byte_vec) = json_byte_vec_result else {
+    return Ok(
+      Response::builder()
+        .status(500)
+        .body("Error converting value to bytes")
+        .build(),
+    );
+  };
+
+  Ok(
+    Response::builder()
+      .header("Content-Type", "application/json")
+      .body(json_byte_vec)
+      .build(),
+  )
 }
 
 /// Handles wishlist retrieval requests using the HTTP GET method.
