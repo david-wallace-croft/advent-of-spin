@@ -1,4 +1,5 @@
 use ::dioxus::prelude::*;
+use ::reqwest::{Error, Response};
 use ::serde::{Deserialize, Serialize};
 use ::std::collections::HashMap;
 use ::std::rc::Rc;
@@ -63,11 +64,13 @@ impl Wishlist {
 
     debug!("Uploading wishlist: {wishlist_json}");
 
-    let _response = client
+    let response_result: Result<Response, Error> = client
       .post("https://challenge2-xqnag9fm.fermyon.app/api/wishlists")
       .header("Content-Type", "application/json")
       .body(wishlist_json)
       .send()
       .await;
+
+    debug!("Response result: {response_result:?}");
   }
 }
