@@ -15,6 +15,32 @@
 cd ui/
 dx bundle
 ```
+- Compile the Wasm
+```
+cd string-reverse
+npm install
+npm run all
+```
+- Install wasm-tools
+```
+cargo install --locked wasm-tools
+```
+- View the WIT
+```
+wasm-tools component wit string-reverse/string-reverse.wasm
+```
+- Install the plugin
+```
+spin plugins install --url https://github.com/fermyon/spin-deps-plugin/releases/download/canary/spin-deps.json -y  
+```
+- Add the dependency
+```
+spin deps add string-reverse/string-reverse.wasm
+```
+- Generate the bindings
+```
+spin deps generate-bindings -L rust -o src/bindings -c challenge2
+```
 - Deploy to the Fermyon Spin cloud
 ```
 cd ../
