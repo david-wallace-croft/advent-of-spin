@@ -1,11 +1,14 @@
-use crate::components::wishlist_form::WishlistForm;
-use crate::components::wishlists::Wishlists;
+use super::super::components::wishlist_form::WishlistForm;
+use super::super::components::wishlists::Wishlists;
+use super::super::data::wishlist::Wishlist;
 use ::dioxus::prelude::*;
 
 const IMAGE_SRC_SANTA_CLAUS: Asset = asset!("/assets/santa-claus.jpg");
 
 #[component]
 pub fn Home() -> Element {
+  use_context_provider(|| Signal::new(Vec::<Wishlist>::new()));
+
   rsx! {
     img {
       class: "app-santa-claus",

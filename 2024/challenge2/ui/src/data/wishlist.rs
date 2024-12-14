@@ -1,5 +1,4 @@
 use ::dioxus::prelude::*;
-use ::reqwest::{Error, Response};
 use ::serde::{Deserialize, Serialize};
 use ::std::collections::HashMap;
 use ::std::rc::Rc;
@@ -42,6 +41,28 @@ impl Wishlist {
     })
   }
 
+  pub async fn update_wishlists(mut wishlists_signal: Signal<Vec<Wishlist>>) {
+    let response_result: reqwest::Result<reqwest::Response> =
+      reqwest::get("https://challenge2-xqnag9fm.fermyon.app/api/wishlists")
+        .await;
+
+    let Ok(response) = response_result else {
+      error!("Failed to get wishlists");
+
+      return;
+    };
+
+    let wishlists_result: reqwest::Result<_> = response.json().await;
+
+    let Ok(wishlists) = wishlists_result else {
+      error!("Failed to parse wishlists");
+
+      return;
+    };
+
+    *wishlists_signal.write() = wishlists;
+  }
+
   pub async fn upload_wishlist(wishlist_option: Option<Wishlist>) {
     let Some(wishlist) = wishlist_option else {
       debug!("Invalid Wishlist");
@@ -64,7 +85,7 @@ impl Wishlist {
 
     debug!("Uploading wishlist: {wishlist_json}");
 
-    let response_result: Result<Response, Error> = client
+    let response_result: reqwest::Result<reqwest::Response> = client
       .post("https://challenge2-xqnag9fm.fermyon.app/api/wishlists")
       .header("Content-Type", "application/json")
       .body(wishlist_json)
