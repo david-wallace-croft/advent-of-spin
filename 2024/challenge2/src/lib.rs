@@ -1,9 +1,12 @@
+use self::bindings::deps::example::string_reverse;
 use ::serde_json::Value;
 use ::spin_sdk::http::Params;
 use ::spin_sdk::http::Router;
 use ::spin_sdk::http::{IntoResponse, Request, Response};
 use ::spin_sdk::http_component;
 use ::spin_sdk::key_value::{Error, Store};
+
+mod bindings;
 
 #[http_component]
 fn handle_route(request: Request) -> Response {
@@ -30,9 +33,11 @@ fn naughty_or_nice_get(
 
   let name: &str = params.get("name").unwrap_or("World");
 
+  let reversed_name = string_reverse::reverse::reverse_string(name);
+
   let response: Response = Response::builder()
     .header("Content-Type", "text/plain")
-    .body(format!("Hello, {}!", name))
+    .body(format!("Hello, {}!", reversed_name))
     .build();
 
   Ok(response)

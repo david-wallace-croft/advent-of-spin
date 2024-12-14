@@ -20,6 +20,10 @@ cd string-reverse
 npm install
 npm run build
 ```
+- Add wit_bindgen
+```
+cargo add wit_bindgen
+```
 - Install wasm-tools
 ```
 cargo install --locked wasm-tools
