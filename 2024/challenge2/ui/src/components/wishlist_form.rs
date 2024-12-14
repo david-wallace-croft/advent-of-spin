@@ -9,21 +9,9 @@ pub fn WishlistForm() -> Element {
       onsubmit: move |event| {
         debug!("Submitted! {event:?}");
 
-        let wishlist: Option<Wishlist> = Wishlist::parse_wishlist(event);
+        let wishlist_option: Option<Wishlist> = Wishlist::parse_wishlist(event);
 
-        if let Some(wishlist) = wishlist {
-          debug!("Wishlist: {wishlist:?}");
-
-          let _future = use_resource(move || {
-            let wishlist_clone = wishlist.clone();
-
-            async {
-              Wishlist::upload_wishlist(wishlist_clone).await;
-            }
-          });
-        } else {
-          debug!("Invalid Wishlist");
-        }
+        Wishlist::upload_wishlist(wishlist_option)
       },
       input {
         name: "name",

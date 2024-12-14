@@ -41,7 +41,15 @@ impl Wishlist {
     })
   }
 
-  pub async fn upload_wishlist(wishlist: Wishlist) {
+  pub async fn upload_wishlist(wishlist_option: Option<Wishlist>) {
+    let Some(wishlist) = wishlist_option else {
+      debug!("Invalid Wishlist");
+
+      return;
+    };
+
+    debug!("Wishlist: {wishlist:?}");
+
     let wishlist_json_result: serde_json::Result<String> =
       serde_json::to_string(&wishlist);
 
