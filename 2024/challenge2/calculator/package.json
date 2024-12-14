@@ -1,0 +1,15 @@
+{
+  "name": "calculator",
+  "description": "Calculates naughty or nice",
+  "type": "module",
+  "scripts": {
+    "build": "jco componentize calculator.js --wit wit/component.wit --world-name component --out calculator.wasm",
+    "transpile": "jco transpile calculator.wasm -o dist/transpiled",
+    "transpiled-js": "node run-transpiled.js",
+    "all": "npm run build; npm run transpile; npm run transpiled-js"
+  },
+  "devDependencies": {
+    "@bytecodealliance/jco": "1.8.1",
+    "@bytecodealliance/componentize-js": "0.15.0"
+  }
+}

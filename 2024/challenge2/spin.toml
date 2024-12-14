@@ -20,7 +20,7 @@ command = "cargo build --target wasm32-wasip1 --release"
 watch = ["src/**/*.rs", "Cargo.toml"]
 
 [component.challenge2.dependencies]
-"example:string-reverse/reverse@0.1.0" = { path = "string-reverse/string-reverse.wasm" }
+"croftsoft:naughty-or-nice/calculator@0.1.0" = { path = "calculator/calculator.wasm" }
 
 [[trigger.http]]
 route = "/..."

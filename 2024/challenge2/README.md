@@ -16,7 +16,7 @@ cd ui/
 dx bundle
 ```
 - Compile the Wasm
-cd string-reverse
+cd calculator
 npm install
 npm run build
 ```
@@ -30,7 +30,7 @@ cargo install --locked wasm-tools
 ```
 - View the WIT
 ```
-wasm-tools component wit string-reverse.wasm
+wasm-tools component wit calculator.wasm
 ```
 - Install the plugin
 ```
@@ -39,11 +39,11 @@ spin plugins install --url https://github.com/fermyon/spin-deps-plugin/releases/
 - Add the dependency
 ```
 cd ../
-spin deps add string-reverse/string-reverse.wasm
+spin deps add calculator/calculator.wasm
 ```
 - When prompted
-  - Select "example:string-reverse@0.1.0"
-  - Select "reverse"
+  - Select "croftsoft:naughty-or-nice@0.1.0"
+  - Select "calculator"
   - Select "challenge2"
 - Generate the bindings
 ```

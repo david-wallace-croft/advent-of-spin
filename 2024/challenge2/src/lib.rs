@@ -1,4 +1,4 @@
-use self::bindings::deps::example::string_reverse;
+use self::bindings::deps::croftsoft::naughty_or_nice::calculator;
 use ::serde_json::Value;
 use ::spin_sdk::http::Params;
 use ::spin_sdk::http::Router;
@@ -33,11 +33,11 @@ fn naughty_or_nice_get(
 
   let name: &str = params.get("name").unwrap_or("World");
 
-  let reversed_name = string_reverse::reverse::reverse_string(name);
+  let calculated = calculator::calculate(name);
 
   let response: Response = Response::builder()
     .header("Content-Type", "text/plain")
-    .body(format!("Hello, {}!", reversed_name))
+    .body(format!("Hello, {}!", calculated))
     .build();
 
   Ok(response)

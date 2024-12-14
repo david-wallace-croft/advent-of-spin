@@ -1,0 +1,10 @@
+package croftsoft:naughty-or-nice@0.1.0;
+
+@since(version = 0.1.0)
+interface calculator {
+    calculate: func(s: string) -> u8;
+}
+
+world component {
+    export calculator;
+}
