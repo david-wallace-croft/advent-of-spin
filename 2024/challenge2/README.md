@@ -11,9 +11,15 @@
 
 - Install the Command Line Interfaces (CLIs) for Dioxus and Fermyon Spin
 - Build and bundle the front-end
+  - With Static Site Generation (SSG) and client-side hydration 
 ```
 cd ui/
-dx bundle
+rm -rf target/dx
+dx bundle --ssg
+```
+- Copy the SSG index.html files to the public/ directory
+```
+cp -r static/* target/dx/ui/release/web/public/
 ```
 - Compile the Wasm
 cd calculator
