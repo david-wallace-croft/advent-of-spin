@@ -3,13 +3,19 @@ use super::super::components::wishlists::Wishlists;
 use super::super::data::wishlist::Wishlist;
 use ::dioxus::prelude::*;
 
+const FAVICON: Asset = asset!("/assets/favicon.ico");
 const IMAGE_SRC_SANTA_CLAUS: Asset = asset!("/assets/santa-claus.jpg");
+const MAIN_CSS: Asset = asset!("/assets/main.css");
 
 #[component]
 pub fn Home() -> Element {
   use_context_provider(|| Signal::new(Vec::<Wishlist>::new()));
 
   rsx! {
+    document::Link { rel: "icon", href: FAVICON }
+
+    document::Link { rel: "stylesheet", href: MAIN_CSS }
+
     img {
       class: "app-santa-claus",
       src: IMAGE_SRC_SANTA_CLAUS

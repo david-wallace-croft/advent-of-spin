@@ -1,7 +1,7 @@
 use super::super::route::Route;
 use ::dioxus::prelude::*;
 
-const NAVBAR_CSS: Asset = asset!("/assets/styling/navbar.css");
+const NAVBAR_CSS: Asset = asset!("/assets/navbar.css");
 
 #[component]
 pub fn Navbar() -> Element {

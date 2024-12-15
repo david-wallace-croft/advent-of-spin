@@ -7,22 +7,37 @@ mod data;
 mod route;
 mod views;
 
-const FAVICON: Asset = asset!("/assets/favicon.ico");
-const MAIN_CSS: Asset = asset!("/assets/styling/main.css");
+#[server(endpoint = "static_routes")]
+async fn static_routes() -> Result<Vec<String>, ServerFnError> {
+  Ok(
+    Route::static_routes()
+      .into_iter()
+      .map(|route| route.to_string())
+      .collect::<Vec<_>>(),
+  )
+}
 
 fn main() {
   dioxus_logger::init(Level::DEBUG).expect("Failed to initialize logger");
 
-  launch(App);
+  LaunchBuilder::new()
+    .with_cfg(server_only! {
+        ServeConfig::builder()
+            // turn on incremental site generation with the .incremental() method
+            .incremental(IncrementalRendererConfig::new())
+            .build()
+            .unwrap()
+    })
+    .launch(|| {
+      rsx! {
+          Router::<Route> {}
+      }
+    })
 }
 
 #[component]
 fn App() -> Element {
   rsx! {
-    document::Link { rel: "icon", href: FAVICON }
-
-    document::Link { rel: "stylesheet", href: MAIN_CSS }
-
     Router::<Route> {}
   }
 }
