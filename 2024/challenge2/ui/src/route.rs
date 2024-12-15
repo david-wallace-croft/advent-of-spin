@@ -8,6 +8,8 @@ pub enum Route {
   #[layout(Navbar)]
   #[route("/")]
   Home {},
+  // Normally this would be just /naughty-or-nice without the .html
+  // but passing the challenge automated validation test requires it
   #[route("/naughty-or-nice.html")]
   NaughtyOrNice {},
 }
