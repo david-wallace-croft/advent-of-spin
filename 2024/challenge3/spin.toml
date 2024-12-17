@@ -1,0 +1,31 @@
+spin_manifest_version = 2
+
+[application]
+name = "challenge3"
+version = "0.1.0"
+authors = ["David Wallace Croft <david@CroftSoft.com>"]
+description = "Advent of Spin 2024 Challenge 3 Solution"
+
+[[trigger.http]]
+route = "/api/..."
+component = "challenge3"
+
+[component.challenge3]
+allowed_outbound_hosts = []
+key_value_stores = ["default"]
+source = "target/wasm32-wasip1/release/challenge3.wasm"
+
+[component.challenge3.build]
+command = "cargo build --target wasm32-wasip1 --release"
+watch = ["src/**/*.rs", "Cargo.toml"]
+
+[component.challenge3.dependencies]
+"croftsoft:naughty-or-nice/calculator@0.1.0" = { path = "calculator/calculator.wasm" }
+
+[[trigger.http]]
+route = "/..."
+component = "static-fileserver"
+
+[component.static-fileserver]
+source = { url = "https://github.com/fermyon/spin-fileserver/releases/download/v0.3.0/spin_static_fs.wasm", digest = "sha256:ef88708817e107bf49985c7cefe4dd1f199bf26f6727819183d5c996baa3d148" }
+files = [{ source = "ui/target/dx/ui/release/web/public", destination = "/" }]
