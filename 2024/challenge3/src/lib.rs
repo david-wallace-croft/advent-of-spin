@@ -1,4 +1,5 @@
-use self::bindings::deps::croftsoft::naughty_or_nice::calculator;
+use self::bindings0::deps::components::advent_of_spin::generator;
+use self::bindings1::deps::croftsoft::naughty_or_nice::calculator;
 use ::serde_json::Value;
 use ::spin_sdk::http::Params;
 use ::spin_sdk::http::Router;
@@ -7,7 +8,8 @@ use ::spin_sdk::http_component;
 use ::spin_sdk::key_value::{Error, Store};
 use ::std::borrow::Cow;
 
-mod bindings;
+mod bindings0;
+mod bindings1;
 
 #[http_component]
 fn handle_route(request: Request) -> Response {
@@ -21,7 +23,53 @@ fn handle_route(request: Request) -> Response {
 
   router.post("/api/wishlists", wishlists_post);
 
+  router.post("/api/generate-gift-suggestions", gift_suggestions_post);
+
   router.handle(request)
+}
+
+fn gift_suggestions_post(
+  request: Request,
+  _params: Params,
+) -> anyhow::Result<impl IntoResponse> {
+  // Parse the request body as a JSON string
+
+  let body_bytes: &[u8] = request.body().as_ref();
+
+  let body_result: Result<Value, serde_json::Error> =
+    serde_json::from_slice(body_bytes);
+
+  let Ok(body) = body_result else {
+    return Ok(
+      Response::builder()
+        .status(400)
+        .body("Error parsing request body")
+        .build(),
+    );
+  };
+
+  // Extract the "name" field from the JSON object.
+  // Return an HTTP status code 400 Bad Request if the field is missing.
+
+  let name_option: Option<&str> = body["name"].as_str();
+
+  let Some(name) = name_option else {
+    // TODO: Maybe this should be a 422 Unprocessable Entity instead
+    return Ok(
+      Response::builder()
+        .status(400)
+        .body("name field missing")
+        .build(),
+    );
+  };
+
+  let _result = generator::suggest(name, 3, "gifts");
+
+  // TODO
+
+  // Return an HTTP status of 200 OK
+
+  Ok(Response::builder().status(200).build())
 }
 
 fn naughty_or_nice_get(
