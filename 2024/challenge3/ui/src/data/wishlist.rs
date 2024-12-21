@@ -3,7 +3,7 @@ use ::serde::{Deserialize, Serialize};
 use ::std::collections::HashMap;
 use ::std::rc::Rc;
 use ::tracing::{debug, error};
-use super::super::constants::API_URL;
+use super::super::constants;
 
 #[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub struct Wishlist {
@@ -44,7 +44,7 @@ impl Wishlist {
 
   pub async fn update_wishlists(mut wishlists_signal: Signal<Vec<Wishlist>>) {
     let response_result: reqwest::Result<reqwest::Response> =
-      reqwest::get(format!("{}/wishlists", API_URL)).await;
+      reqwest::get(format!("{}/wishlists", constants::API_URL)).await;
 
     let Ok(response) = response_result else {
       error!("Failed to get wishlists");
@@ -86,7 +86,7 @@ impl Wishlist {
     debug!("Uploading wishlist: {wishlist_json}");
 
     let response_result: reqwest::Result<reqwest::Response> = client
-      .post(format!("{}/wishlists", API_URL))
+      .post(format!("{}/wishlists", constants::API_URL))
       .header("Content-Type", "application/json")
       .body(wishlist_json)
       .send()

@@ -1,112 +1,64 @@
-// use self::bindings0::deps::components::advent_of_spin::generator;
-// use self::bindings1::deps::croftsoft::naughty_or_nice::calculator;
+use self::bindings::deps::croftsoft::naughty_or_nice::calculator;
 use ::serde_json::Value;
 use ::spin_sdk::http::Params;
 use ::spin_sdk::http::Router;
 use ::spin_sdk::http::{IntoResponse, Request, Response};
 use ::spin_sdk::http_component;
 use ::spin_sdk::key_value::{Error, Store};
-// use ::std::borrow::Cow;
+use ::std::borrow::Cow;
 
-mod bindings0;
-mod bindings1;
+mod bindings;
 
 #[http_component]
 fn handle_route(request: Request) -> Response {
-  println!("Request: {:?}", request.header("spin-full-url"));
+  println!("Handling request to {:?}", request.header("spin-full-url"));
 
   let mut router = Router::new();
 
-  // router.get("/api/naughty-or-nice/:name", naughty_or_nice_get);
+  router.get("/api/naughty-or-nice/:name", naughty_or_nice_get);
 
   router.get("/api/wishlists", wishlists_get);
 
   router.post("/api/wishlists", wishlists_post);
 
-  // router.post("/api/generate-gift-suggestions", gift_suggestions_post);
-
   router.handle(request)
 }
 
-// fn gift_suggestions_post(
-//   request: Request,
-//   _params: Params,
-// ) -> anyhow::Result<impl IntoResponse> {
-//   // Parse the request body as a JSON string
+fn naughty_or_nice_get(
+  _request: Request,
+  params: Params,
+) -> anyhow::Result<impl IntoResponse> {
+  let name: &str = params.get("name").unwrap_or("Grinch");
 
-//   let body_bytes: &[u8] = request.body().as_ref();
+  let decoded_name: Cow<str> =
+    urlencoding::decode(name).unwrap_or(Cow::from(name.to_string()));
 
-//   let body_result: Result<Value, serde_json::Error> =
-//     serde_json::from_slice(body_bytes);
+  let score = calculator::calculate(&decoded_name);
 
-//   let Ok(body) = body_result else {
-//     return Ok(
-//       Response::builder()
-//         .status(400)
-//         .body("Error parsing request body")
-//         .build(),
-//     );
-//   };
+  let value: Value = serde_json::json!({
+    "name": decoded_name,
+    "score": score,
+  });
 
-//   // Extract the "name" field from the JSON object.
-//   // Return an HTTP status code 400 Bad Request if the field is missing.
+  let json_byte_vec_result: Result<Vec<u8>, serde_json::Error> =
+    serde_json::to_vec(&value);
 
-//   let name_option: Option<&str> = body["name"].as_str();
+  let Ok(json_byte_vec) = json_byte_vec_result else {
+    return Ok(
+      Response::builder()
+        .status(500)
+        .body("Error converting value to bytes")
+        .build(),
+    );
+  };
 
-//   let Some(name) = name_option else {
-//     // TODO: Maybe this should be a 422 Unprocessable Entity instead
-//     return Ok(
-//       Response::builder()
-//         .status(400)
-//         .body("name field missing")
-//         .build(),
-//     );
-//   };
-
-//   let _result = generator::suggest(name, 3, "gifts");
-
-//   // TODO
-
-//   // Return an HTTP status of 200 OK
-
-//   Ok(Response::builder().status(200).build())
-// }
-
-// fn naughty_or_nice_get(
-//   _request: Request,
-//   params: Params,
-// ) -> anyhow::Result<impl IntoResponse> {
-//   let name: &str = params.get("name").unwrap_or("Grinch");
-
-//   let decoded_name: Cow<str> =
-//     urlencoding::decode(name).unwrap_or(Cow::from(name.to_string()));
-
-//   let score = calculator::calculate(&decoded_name);
-
-//   let value: Value = serde_json::json!({
-//     "name": decoded_name,
-//     "score": score,
-//   });
-
-//   let json_byte_vec_result: Result<Vec<u8>, serde_json::Error> =
-//     serde_json::to_vec(&value);
-
-//   let Ok(json_byte_vec) = json_byte_vec_result else {
-//     return Ok(
-//       Response::builder()
-//         .status(500)
-//         .body("Error converting value to bytes")
-//         .build(),
-//     );
-//   };
-
-//   Ok(
-//     Response::builder()
-//       .header("Content-Type", "application/json")
-//       .body(json_byte_vec)
-//       .build(),
-//   )
-// }
+  Ok(
+    Response::builder()
+      .header("Content-Type", "application/json")
+      .body(json_byte_vec)
+      .build(),
+  )
+}
 
 /// Handles wishlist retrieval requests using the HTTP GET method.
 fn wishlists_get(
