@@ -14,7 +14,8 @@
   - With Static Site Generation (SSG) and client-side hydration 
 ```
 cd ui/
-rm -rf target/dx
+rm -rf static
+rm -rf target
 dx bundle --ssg
 ```
 - Copy the SSG index.html files to the public/ directory
@@ -22,6 +23,8 @@ dx bundle --ssg
 cp -r static/* target/dx/ui/release/web/public/
 ```
 - Compile the Wasm
+```
+cd ..
 cd calculator
 npm install
 npm run build
@@ -55,7 +58,10 @@ spin deps add calculator/calculator.wasm
 ```
 spin deps generate-bindings -L rust -o src/bindings -c challenge3
 ```
-- TODO: spin build here?
+- Build
+```
+spin build
+```
 - Deploy to the Fermyon Spin cloud
 ```
 spin deploy
