@@ -6,22 +6,22 @@ version = "0.1.0"
 authors = ["David Wallace Croft <david@CroftSoft.com>"]
 description = "Advent of Spin 2024 Challenge 3 Solution"
 
-[[trigger.http]]
-route = "/api/..."
-component = "challenge3"
+# [[trigger.http]]
+# route = "/api/..."
+# component = "challenge3"
 
-[component.challenge3]
-allowed_outbound_hosts = []
-key_value_stores = ["default"]
-source = "target/wasm32-wasip1/release/challenge3.wasm"
+# [component.challenge3]
+# allowed_outbound_hosts = []
+# key_value_stores = ["default"]
+# source = "target/wasm32-wasip1/release/challenge3.wasm"
 
-[component.challenge3.build]
-command = "cargo build --target wasm32-wasip1 --release"
-watch = ["src/**/*.rs", "Cargo.toml"]
+# [component.challenge3.build]
+# command = "cargo build --target wasm32-wasip1 --release"
+# watch = ["src/**/*.rs", "Cargo.toml"]
 
-[component.challenge3.dependencies]
-"components:advent-of-spin/generator@0.1.0" = { path = "ai/gift-suggestions-generator.wasm" }
-"croftsoft:naughty-or-nice/calculator@0.1.0" = { path = "calculator/calculator.wasm" }
+# [component.challenge3.dependencies]
+# "components:advent-of-spin/generator@0.1.0" = { path = "ai/gift-suggestions-generator.wasm" }
+# "croftsoft:naughty-or-nice/calculator@0.1.0" = { path = "calculator/calculator.wasm" }
 
 [[trigger.http]]
 route = "/..."

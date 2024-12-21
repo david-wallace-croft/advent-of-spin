@@ -12,13 +12,17 @@ pub fn Navbar() -> Element {
           id: "navbar",
           Link {
               to: Route::Home{},
-              "Home"
+              "Wish Lists"
           }
           Link {
               to: Route::NaughtyOrNice {},
               "Naughty or Nice"
           }
-      }
+          Link {
+            to: Route::GiftSuggestions{},
+            "Gift Suggestions"
+        }
+    }
 
       Outlet::<Route> {}
   }

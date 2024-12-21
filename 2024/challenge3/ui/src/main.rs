@@ -3,6 +3,7 @@ use ::dioxus::prelude::*;
 use ::tracing::Level;
 
 mod components;
+mod constants;
 mod data;
 mod route;
 mod views;

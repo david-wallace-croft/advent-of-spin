@@ -4,6 +4,7 @@ use ::serde::{Deserialize, Serialize};
 use ::std::collections::HashMap;
 use ::std::rc::Rc;
 use ::tracing::{debug, error};
+use super::super::constants::API_URL;
 
 #[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub struct Calculated {
@@ -32,10 +33,7 @@ impl Calculated {
     let client = reqwest::Client::new();
 
     let response_result: Result<Response, Error> = client
-      .get(format!(
-        "https://challenge3-xqnag9fm.fermyon.app/api/naughty-or-nice/{}",
-        name
-      ))
+      .get(format!("{}/naughty-or-nice/{}", API_URL, name))
       .send()
       .await;
 
