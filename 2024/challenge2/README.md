@@ -57,6 +57,10 @@ spin deps add calculator/calculator.wasm
 ```
 spin deps generate-bindings -L rust -o src/bindings -c challenge2
 ```
+- Build
+```
+spin build
+```
 - Deploy to the Fermyon Spin cloud
 ```
 spin deploy
