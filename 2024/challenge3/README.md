@@ -58,6 +58,13 @@ spin deps add calculator/calculator.wasm
 ```
 spin deps generate-bindings -L rust -o src/bindings -c challenge3
 ```
+- Make the AI
+```
+cd ai
+python -m venv .venv
+source .venv/Scripts/activate
+pip install -r requirements.txt
+```
 - Build
 ```
 spin build
