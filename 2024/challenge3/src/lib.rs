@@ -1,4 +1,4 @@
-use self::bindings::deps::components::advent_of_spin::generator;
+// use self::bindings::deps::components::advent_of_spin::generator;
 // use self::bindings::deps::croftsoft::naughty_or_nice::calculator;
 use ::serde_json::Value;
 use ::spin_sdk::http::Params;
@@ -87,20 +87,25 @@ fn generate_gift_suggestions_post(
     );
   };
 
-  let result: Result<generator::Suggestions, _> = generator::suggest(name, age, likes);
+  // let result: Result<generator::Suggestions, _> = generator::suggest(name, age, likes);
 
-  let Ok(suggestions) = result else {
-    return Ok(
-      Response::builder()
-        .status(500)
-        .body("Error generating gift suggestions")
-        .build(),
-    );
-  };
+  // let Ok(suggestions) = result else {
+  //   return Ok(
+  //     Response::builder()
+  //       .status(500)
+  //       .body("Error generating gift suggestions")
+  //       .build(),
+  //   );
+  // };
+
+  // let value: Value = serde_json::json!({
+  //   "name": suggestions.name,
+  //   "giftSuggestions": suggestions.suggestions,
+  // });
 
   let value: Value = serde_json::json!({
-    "name": suggestions.name,
-    "giftSuggestions": suggestions.suggestions,
+    "name": "Billy",
+    "giftSuggestions": "sled",
   });
 
   let json_byte_vec_result: Result<Vec<u8>, serde_json::Error> =

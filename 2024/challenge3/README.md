@@ -14,8 +14,8 @@
   - With Static Site Generation (SSG) and client-side hydration 
 ```
 cd ui/
-rm -rf static
-rm -rf target/dx
+rm -rf static/
+rm -rf target/
 dx bundle --ssg
 ```
 - Copy the SSG index.html files to the public/ directory

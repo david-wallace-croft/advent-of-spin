@@ -8,6 +8,7 @@ use super::super::constants;
 use super::suggestion_request::SuggestionRequest;
 
 #[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Suggestion {
   pub gift_suggestions: String,
   pub name: String,
