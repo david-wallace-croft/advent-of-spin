@@ -14,10 +14,10 @@ pub fn Navbar() -> Element {
               to: Route::Home{},
               "Wish Lists"
           }
-          Link {
-              to: Route::NaughtyOrNice {},
-              "Naughty or Nice"
-          }
+        //   Link {
+        //       to: Route::NaughtyOrNice {},
+        //       "Naughty or Nice"
+        //   }
           Link {
             to: Route::GiftSuggestions{},
             "Gift Suggestions"

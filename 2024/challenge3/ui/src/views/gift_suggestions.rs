@@ -1,22 +1,22 @@
-use super::super::components::name_form::NameForm;
-use super::super::components::score::Score;
-use crate::data::calculated::Calculated;
+use super::super::components::gift_suggestion_form::GiftSuggestionForm;
+use super::super::components::gift_suggestion_table::GiftSuggestionTable;
+use super::super::data::suggestion::Suggestion;
 use ::dioxus::prelude::*;
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
-const NAUGHTY_OR_NICE_CSS: Asset = asset!("/assets/naughty-or-nice.css");
+const GIFT_SUGGESTIONS_CSS: Asset = asset!("/assets/gift-suggestions.css");
 
 #[component]
 pub fn GiftSuggestions() -> Element {
-  use_context_provider(|| Signal::new(Calculated::default()));
+  use_context_provider(|| Signal::new(Suggestion::default()));
 
   rsx! {
     document::Link { rel: "icon", href: FAVICON }
 
-    document::Link { rel: "stylesheet", href: NAUGHTY_OR_NICE_CSS}
+    document::Link { rel: "stylesheet", href: GIFT_SUGGESTIONS_CSS}
 
-    NameForm { }
+    GiftSuggestionForm { }
 
-    Score { }
+    GiftSuggestionTable { }
   }
 }

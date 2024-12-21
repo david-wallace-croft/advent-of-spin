@@ -15,7 +15,7 @@
 ```
 cd ui/
 rm -rf static
-rm -rf target
+rm -rf target/dx
 dx bundle --ssg
 ```
 - Copy the SSG index.html files to the public/ directory

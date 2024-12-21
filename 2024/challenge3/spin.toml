@@ -19,8 +19,9 @@ source = "target/wasm32-wasip1/release/challenge3.wasm"
 command = "cargo build --target wasm32-wasip1 --release"
 watch = ["src/**/*.rs", "Cargo.toml"]
 
-[component.challenge3.dependencies]
-"croftsoft:naughty-or-nice/calculator@0.1.0" = { path = "calculator/calculator.wasm" }
+# [component.challenge3.dependencies]
+# "croftsoft:naughty-or-nice/calculator@0.1.0" = { path = "calculator/calculator.wasm" }
+# "components:advent-of-spin/generator@0.1.0" = { path = "ai/gift-suggestions-generator.wasm" }
 
 [[trigger.http]]
 route = "/..."
