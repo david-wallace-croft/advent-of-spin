@@ -22,6 +22,8 @@ dx bundle --ssg
 cp -r static/* target/dx/ui/release/web/public/
 ```
 - Compile the Wasm
+```
+cd ..
 cd calculator
 npm install
 npm run build
