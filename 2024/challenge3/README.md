@@ -64,6 +64,26 @@ cd ai
 python -m venv .venv
 source .venv/Scripts/activate
 pip install -r requirements.txt
+componentize-py \
+  -d ./wit/ \
+  -w gift-suggestions-generator \
+  componentize \
+  -m spin_sdk=spin-imports \
+  app \
+  -o gift-suggestions-generator.wasm
+```
+- Add the dependency
+```
+cd ../
+spin deps add ai/gift-suggestions-generator.wasm
+```
+- Generate the bindings
+```
+spin deps generate-bindings -L rust -o src/bindings -c challenge3
+```
+- Add serde
+```
+cargo add -F serde_derive
 ```
 - Build
 ```

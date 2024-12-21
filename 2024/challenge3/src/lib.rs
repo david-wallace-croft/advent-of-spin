@@ -1,3 +1,4 @@
+use self::bindings::deps::components::advent_of_spin::generator;
 // use self::bindings::deps::croftsoft::naughty_or_nice::calculator;
 use ::serde_json::Value;
 use ::spin_sdk::http::Params;
@@ -15,6 +16,8 @@ fn handle_route(request: Request) -> Response {
 
   let mut router = Router::new();
 
+  router.post("/api/generate-gift-suggestions", generate_gift_suggestions_post);
+
   // router.get("/api/naughty-or-nice/:name", naughty_or_nice_get);
 
   router.get("/api/wishlists", wishlists_get);
@@ -23,6 +26,98 @@ fn handle_route(request: Request) -> Response {
 
   router.handle(request)
 }
+
+fn generate_gift_suggestions_post(
+  request: Request,
+  _params: Params,
+) -> anyhow::Result<impl IntoResponse> {
+  // Parse the request body as a JSON string
+
+  let body_bytes: &[u8] = request.body().as_ref();
+
+  let body_result: Result<Value, serde_json::Error> =
+    serde_json::from_slice(body_bytes);
+
+  let Ok(body) = body_result else {
+    return Ok(
+      Response::builder()
+        .status(400)
+        .body("Error parsing request body")
+        .build(),
+    );
+  };
+
+  // Extract the "name" field from the JSON object.
+  // Return an HTTP status code 400 Bad Request if the field is missing.
+
+  let name_option: Option<&str> = body["name"].as_str();
+
+  let Some(name) = name_option else {
+    // TODO: Maybe this should be a 422 Unprocessable Entity instead
+    return Ok(
+      Response::builder()
+        .status(400)
+        .body("name field missing")
+        .build(),
+    );
+  };
+
+  let age_option: Option<u64> = body["age"].as_u64();
+
+  let Some(age_u64) = age_option else {
+    return Ok(
+      Response::builder()
+        .status(400)
+        .body("age field missing")
+        .build(),
+    );
+  };
+
+  let age: u8 = age_u64 as u8;
+
+  let likes_option: Option<&str> = body["likes"].as_str();
+
+  let Some(likes) = likes_option else {
+    // TODO: Maybe this should be a 422 Unprocessable Entity instead
+    return Ok(
+      Response::builder()
+        .status(400)
+        .body("likes field missing")
+        .build(),
+    );
+  };
+
+  let result: Result<generator::Suggestions, _> = generator::suggest(name, age, likes);
+
+  let Ok(suggestions) = result else {
+    return Ok(
+      Response::builder()
+        .status(500)
+        .body("Error generating gift suggestions")
+        .build(),
+    );
+  };
+
+  let value: Value = serde_json::json!({
+    "name": suggestions.name,
+    "giftSuggestions": suggestions.suggestions,
+  });
+
+  let json_byte_vec_result: Result<Vec<u8>, serde_json::Error> =
+    serde_json::to_vec(&value);
+
+  let Ok(json_byte_vec) = json_byte_vec_result else {
+    return Ok(
+      Response::builder()
+        .status(500)
+        .body("Error converting value to bytes")
+        .build(),
+    );
+  };
+
+  Ok(Response::builder().status(200).body(json_byte_vec).build())
+}
+
 
 // fn naughty_or_nice_get(
 //   _request: Request,
