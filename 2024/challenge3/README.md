@@ -7,6 +7,49 @@
 
 ![Screenshot 2024-12-08](./media/screenshot-2024-12-08-a.jpg)
 
+## Setup
+
+- Install Dioxus
+```
+cargo install dioxus-cli
+```
+- Configure Spin
+```
+spin plugins update
+
+spin plugins install cloud -v 0.10.0
+
+spin plugins install --url \
+  https://github.com/fermyon/spin-deps-plugin/releases/download/canary/spin-deps.json \
+  -y  
+```
+- Configure Wasm
+```
+cargo add wit_bindgen
+
+cargo add serde -F serde_derive
+
+cargo install --locked wasm-tools
+```
+- Configure Python
+```
+cd 2024/challenge3/ai
+
+python -m venv .venv
+
+source .venv/bin/activate
+
+pip install --upgrade pip
+
+pip install -r requirements.txt
+
+pip install componentize-py
+
+deactivate
+
+cd ..
+```
+
 ## Build and Deploy
 
 - Install the Command Line Interfaces (CLIs) for Dioxus and Fermyon Spin
@@ -28,22 +71,9 @@ cd ..
 cd calculator
 npm install
 npm run build
-```
-- Add wit_bindgen
-```
-cargo add wit_bindgen
-```
-- Install wasm-tools
-```
-cargo install --locked wasm-tools
-```
 - View the WIT
 ```
 wasm-tools component wit calculator.wasm
-```
-- Install the plugin
-```
-spin plugins install --url https://github.com/fermyon/spin-deps-plugin/releases/download/canary/spin-deps.json -y  
 ```
 - Add the dependency
 ```
@@ -61,9 +91,7 @@ spin deps generate-bindings -L rust -o src/bindings -c challenge3
 - Make the AI
 ```
 cd ai
-python -m venv .venv
 source .venv/Scripts/activate
-pip install -r requirements.txt
 componentize-py \
   -d ./wit/ \
   -w gift-suggestions-generator \
@@ -80,10 +108,6 @@ spin deps add ai/gift-suggestions-generator.wasm
 - Generate the bindings
 ```
 spin deps generate-bindings -L rust -o src/bindings -c challenge3
-```
-- Add serde
-```
-cargo add serde -F serde_derive
 ```
 - Build
 ```
