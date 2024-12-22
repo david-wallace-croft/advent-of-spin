@@ -86,11 +86,13 @@ componentize-py \
   -m spin_sdk=spin-imports \
   app \
   -o gift-suggestions-generator.wasm
+
+deactivate
+
+cd ..
 ```
 - View the WIT
 ```
-cd ..
-
 wasm-tools component wit ai/gift-suggestions-generator.wasm
 ```
 - Add the dependency
