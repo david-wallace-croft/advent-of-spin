@@ -52,7 +52,6 @@ cd ..
 
 ## Build and Deploy
 
-- Install the Command Line Interfaces (CLIs) for Dioxus and Fermyon Spin
 - Build and bundle the front-end
   - With Static Site Generation (SSG) and client-side hydration 
 ```
@@ -61,9 +60,13 @@ rm -rf static/
 rm -rf target/
 dx bundle --ssg
 ```
-- Copy the SSG index.html files to the public/ directory
+- Copy the generated files to the distribution directory
 ```
-cp -r static/* target/dx/ui/release/web/public/
+rm -rf public/
+
+cp -r target/dx/ui/release/web/public/* public/
+
+cp -r static/* public/
 ```
 - Compile the Wasm
 ```
