@@ -40,7 +40,7 @@ mkdir ~/bin
 cp spin ~/bin/spin
 cd ..
 rm -rf temp
-cd ~
+cd
 source .profile
 cd -
 spin --version
