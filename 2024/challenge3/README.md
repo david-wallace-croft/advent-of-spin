@@ -73,7 +73,9 @@ cd ..
 - Make the Wasm component
 ```
 cd ai
+
 source .venv/Scripts/activate
+
 componentize-py \
   -d ./wit/ \
   -w gift-suggestions-generator \
@@ -85,6 +87,7 @@ componentize-py \
 - View the WIT
 ```
 cd ..
+
 wasm-tools component wit ai/gift-suggestions-generator.wasm
 ```
 - Add the dependency
