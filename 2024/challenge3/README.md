@@ -67,11 +67,8 @@ rm -rf public/
 cp -r target/dx/ui/release/web/public/* public/
 
 cp -r static/* public/
-```
-- Add the dependency
-```
-cd ../
-spin deps add calculator/calculator.wasm
+
+cd ..
 ```
 - Make the Wasm component
 ```
