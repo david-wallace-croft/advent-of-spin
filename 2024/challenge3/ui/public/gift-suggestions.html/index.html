@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Challenge 3</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+  <link rel="preload" href="/./wasm/ui_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+            <link rel="preload" href="/./wasm/ui.js" as="script">
+            <link rel="stylesheet" href="/assets/navbar-e124d2891042a620.css"/><link rel="icon" href="/assets/favicon-78763c6c4cb3a95e.ico"/><link rel="stylesheet" href="/assets/gift-suggestions-32539363ca3b9e53.css"/></head>
+  <body>
+    <div id="main"><script>window.hydrate_queue=[];window.dx_hydrate=(id,data)=>{const decoded=atob(data),bytes=Uint8Array.from(decoded,(c)=>c.charCodeAt(0));if(window.hydration_callback)window.hydration_callback(id,bytes);else window.hydrate_queue.push([id,bytes])};
+</script><!--placeholder0--><div id="navbar" data-node-hydration="1"><a href="/" data-node-hydration="2,click:1"><!--node-id3-->Wish Lists<!--#--></a><a href="/gift-suggestions.html" aria-current="page" data-node-hydration="4,click:1"><!--node-id5-->Gift Suggestions<!--#--></a></div><!--placeholder6--><!--placeholder7--><form data-node-hydration="8,submit:1"><input name="name" placeholder="Name" type="text"/><input name="age" placeholder="Age" type="number"/><input name="likes" placeholder="Likes" type="text"/><button type="submit">Suggest</button></form><table data-node-hydration="9"><thead><tr><th>Name</th><th>Suggestion</th></tr></thead><tbody><tr><td><!--node-id10-->Loading...<!--#--></td><td><!--node-id11-->Loading...<!--#--></td></tr></tbody></table><script>window.initial_dioxus_hydration_data="hIEY9oEY9YEY9YEY9Q==";</script></div>
+  <script>
+            // We can't use a module script here because we need to start the script immediately when streaming
+            import("/./wasm/ui.js").then(
+                ({ default: init }) => {
+                init("/./wasm/ui_bg.wasm").then((wasm) => {
+                    if (wasm.__wbindgen_start == undefined) {
+                    wasm.main();
+                    }
+                });
+                }
+            );
+            </script>
+            
+            </body>
+</html>

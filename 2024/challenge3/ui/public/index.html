@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Challenge 3</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+  <link rel="preload" href="/./wasm/ui_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+            <link rel="preload" href="/./wasm/ui.js" as="script">
+            <link rel="stylesheet" href="/assets/navbar-e124d2891042a620.css"/><link rel="icon" href="/assets/favicon-78763c6c4cb3a95e.ico"/><link rel="stylesheet" href="/assets/main-eca8e63674c72ec3.css"/></head>
+  <body>
+    <div id="main"><script>window.hydrate_queue=[];window.dx_hydrate=(id,data)=>{const decoded=atob(data),bytes=Uint8Array.from(decoded,(c)=>c.charCodeAt(0));if(window.hydration_callback)window.hydration_callback(id,bytes);else window.hydrate_queue.push([id,bytes])};
+</script><!--placeholder0--><div id="navbar" data-node-hydration="1"><a href="/" aria-current="page" data-node-hydration="2,click:1"><!--node-id3-->Wish Lists<!--#--></a><a href="/gift-suggestions.html" data-node-hydration="4,click:1"><!--node-id5-->Gift Suggestions<!--#--></a></div><!--placeholder6--><!--placeholder7--><img class="app-santa-claus" src="/assets/santa-claus-6ab2dc24caded92a.jpg" data-node-hydration="8"/><div data-node-hydration="9"><p>Solution to the <a href="https://github.com/fermyon/advent-of-spin/tree/main/2024/Challenge-3" target="_blank">Fermyon Advent of Spin 2024 Challenge 3</a><br/>Both front-end and back-end use Rust compiled to WebAssembly (Wasm)<br/><br/>Author: <a href="https://www.croftsoft.com/people/david/research/rust-wasm/" target="_blank">David Wallace Croft, M.Sc.</a><br/>Back-end: <a href="https://www.fermyon.com/spin" target="_blank">Fermyon Spin 3.0</a><br/>Front-end: <a href="https://dioxuslabs.com/" target="_blank">Dioxus 0.6</a><br/>Image: <a href="https://gemini.google.com/" target="_blank">Google Gemini / Imagen 3</a><br/>Repository: <a href="https://github.com/david-wallace-croft/advent-of-spin/tree/main/2024" target="_blank">https://github.com/david-wallace-croft/advent-of-spin/tree/main/2024</a><br/></p></div><form data-node-hydration="10,submit:1"><input name="name" placeholder="Name" type="text"/><input name="item0" placeholder="First Gift" type="text"/><input name="item1" placeholder="Second Gift" type="text"/><input name="item2" placeholder="Third Gift" type="text"/><button type="submit">Add</button></form><table data-node-hydration="11"><thead><tr><th>Name</th><th>Items</th></tr></thead><tbody><!--placeholder12--></tbody></table><script>window.initial_dioxus_hydration_data="hIEY9oEY9YEY9YEY9Q==";</script></div>
+  <script>
+            // We can't use a module script here because we need to start the script immediately when streaming
+            import("/./wasm/ui.js").then(
+                ({ default: init }) => {
+                init("/./wasm/ui_bg.wasm").then((wasm) => {
+                    if (wasm.__wbindgen_start == undefined) {
+                    wasm.main();
+                    }
+                });
+                }
+            );
+            </script>
+            
+            </body>
+</html>
