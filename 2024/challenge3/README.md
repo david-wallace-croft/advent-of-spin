@@ -83,6 +83,8 @@ rm -rf gift_suggestions_generator
 
 componentize-py bindings .
 
+rm gift-suggestions-generator.wasm
+
 componentize-py \
   -d ./wit/ \
   -w gift-suggestions-generator \
@@ -104,8 +106,8 @@ wasm-tools component wit ai/gift-suggestions-generator.wasm
 spin deps add ai/gift-suggestions-generator.wasm
 ```
 - When prompted
-  - Select "?:?@0.1.0"
-  - Select "?"
+  - Select "components:advent-of-spin@0.1.0"
+  - Select "generator"
   - Select "challenge3"
 - Generate the bindings
 ```
