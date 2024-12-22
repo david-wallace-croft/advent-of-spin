@@ -79,6 +79,10 @@ cd ai
 
 source .venv/bin/activate
 
+rm -rf gift_suggestions_generator
+
+componentize-py bindings .
+
 componentize-py \
   -d ./wit/ \
   -w gift-suggestions-generator \
