@@ -41,9 +41,11 @@ source .venv/bin/activate
 
 pip install --upgrade pip
 
-pip install -r requirements.txt
+# pip install -r requirements.txt
 
 pip install componentize-py
+
+pip install wasmtime
 
 deactivate
 
@@ -79,27 +81,40 @@ cd ai
 
 source .venv/bin/activate
 
-rm -rf gift_suggestions_generator
+rm -rf bindings_guest
 
-componentize-py bindings .
+componentize-py \
+  -d wit/world.wit \
+  -w gift-suggestions-generator \
+  bindings \
+  bindings_guest
 
 rm gift-suggestions-generator.wasm
 
+# --stub-wasi
+# -m spin_sdk=spin-imports
+
 componentize-py \
-  -d ./wit/ \
+  -d ./wit/world.wit \
   -w gift-suggestions-generator \
   componentize \
-  -m spin_sdk=spin-imports \
+  --stub-wasi \
   app \
   -o gift-suggestions-generator.wasm
+
+wasm-tools component wit gift-suggestions-generator.wasm
+
+rm -rf bindings_host/
+
+python3 -m wasmtime.bindgen \
+  gift-suggestions-generator.wasm \
+  --out-dir bindings_host
+
+python3 host.py
 
 deactivate
 
 cd ..
-```
-- View the WIT
-```
-wasm-tools component wit ai/gift-suggestions-generator.wasm
 ```
 - Add the dependency
 ```
