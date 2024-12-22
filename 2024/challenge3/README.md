@@ -103,6 +103,8 @@ wasm-tools component wit ai/gift-suggestions-generator.wasm
 ```
 - Add the dependency
 ```
+rm -rf .wit/
+
 spin deps add ai/gift-suggestions-generator.wasm
 ```
 - When prompted
@@ -111,6 +113,8 @@ spin deps add ai/gift-suggestions-generator.wasm
   - Select "challenge3"
 - Generate the bindings
 ```
+rm -rf src/bindings/
+
 spin deps generate-bindings -L rust -o src/bindings -c challenge3
 ```
 - Build
