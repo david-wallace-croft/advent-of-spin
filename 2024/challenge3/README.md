@@ -83,7 +83,7 @@ spin deps generate-bindings -L rust -o src/bindings -c challenge3
 ```
 - Add serde
 ```
-cargo add -F serde_derive
+cargo add serde -F serde_derive
 ```
 - Build
 ```
