@@ -77,7 +77,7 @@ cd ..
 ```
 cd ai
 
-source .venv/Scripts/activate
+source .venv/bin/activate
 
 componentize-py \
   -d ./wit/ \
