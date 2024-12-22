@@ -68,30 +68,12 @@ cp -r target/dx/ui/release/web/public/* public/
 
 cp -r static/* public/
 ```
-- Compile the Wasm
-```
-cd ..
-cd calculator
-npm install
-npm run build
-- View the WIT
-```
-wasm-tools component wit calculator.wasm
-```
 - Add the dependency
 ```
 cd ../
 spin deps add calculator/calculator.wasm
 ```
-- When prompted
-  - Select "croftsoft:naughty-or-nice@0.1.0"
-  - Select "calculator"
-  - Select "challenge3"
-- Generate the bindings
-```
-spin deps generate-bindings -L rust -o src/bindings -c challenge3
-```
-- Make the AI
+- Make the Wasm component
 ```
 cd ai
 source .venv/Scripts/activate
@@ -103,11 +85,19 @@ componentize-py \
   app \
   -o gift-suggestions-generator.wasm
 ```
+- View the WIT
+```
+cd ..
+wasm-tools component wit ai/gift-suggestions-generator.wasm
+```
 - Add the dependency
 ```
-cd ../
 spin deps add ai/gift-suggestions-generator.wasm
 ```
+- When prompted
+  - Select "?:?@0.1.0"
+  - Select "?"
+  - Select "challenge3"
 - Generate the bindings
 ```
 spin deps generate-bindings -L rust -o src/bindings -c challenge3
