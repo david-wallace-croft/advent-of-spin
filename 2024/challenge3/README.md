@@ -56,8 +56,11 @@ cd ..
   - With Static Site Generation (SSG) and client-side hydration 
 ```
 cd ui/
+
 rm -rf static/
+
 rm -rf target/
+
 dx bundle --ssg
 ```
 - Copy the generated files to the distribution directory
