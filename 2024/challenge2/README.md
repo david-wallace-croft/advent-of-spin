@@ -5,7 +5,8 @@
 [mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [mit-url]: https://github.com/david-wallace-croft/advent-of-spin/blob/main/LICENSE.txt
 
-![Screenshot 2024-12-08](./media/screenshot-2024-12-08-a.jpg)
+![Screenshot NavBar](./media/screenshot-navbar-2025-01-07-a.png)
+![Screenshot NameForm](./media/screenshot-nameform-2025-01-07-a.png)
 
 ## Build and Deploy
 
