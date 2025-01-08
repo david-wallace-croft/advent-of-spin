@@ -7,6 +7,11 @@
 
 ![Screenshot 2024-12-08](./media/screenshot-2024-12-08-a.jpg)
 
+## Incomplete
+
+- I did not finish this challenge before the deadline
+- There might be one or more bugs in the utility componentize-py on Windows
+
 ## Setup
 
 - Install Dioxus
