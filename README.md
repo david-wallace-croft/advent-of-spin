@@ -15,6 +15,7 @@
 - CroftSoft Spin Prototype
   - https://github.com/david-wallace-croft/spin-prototype
 - CroftSoft Advent of Spin 2024 Challenge Solutions
+  - Solutions in the Rust and JavaScript programming languages
   - Slideshow presentation
   - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2024
 
