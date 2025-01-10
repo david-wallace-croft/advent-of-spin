@@ -12,3 +12,5 @@
   - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2024/challenge1
   - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2024/challenge2
   - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2024/challenge3
+- Slideshow Presentation
+  - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2024/slides

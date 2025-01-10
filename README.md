@@ -15,7 +15,8 @@
 - CroftSoft Spin Prototype
   - https://github.com/david-wallace-croft/spin-prototype
 - CroftSoft Advent of Spin 2024 Challenge Solutions
-    - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2024
+  - Slideshow presentation
+  - https://github.com/david-wallace-croft/advent-of-spin/tree/main/2024
 
 ## Installation of Spin on GitHub CodeSpaces
 
